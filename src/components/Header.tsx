@@ -7,6 +7,11 @@ import Link from "next/link"
 import { useState, useEffect } from "react"
 import SearchModal from "./SearchModal"
 
+const NAV_ITEMS = [
+    { name: "Blog", href: "/blog" },
+    { name: "About Us", href: "/about-us" }
+];
+
 interface HeaderProps {
     logo?: string;
     logoAlt?: string;
@@ -33,11 +38,6 @@ export default function Header({ logo, logoAlt = "Logo" }: HeaderProps) {
   }, [])
 
 
-  const navItems = [
-    { name: "Blog", href: "/blog" },
-    { name: "About Us", href: "/about-us" }
-  ]
-
   return (
     <header className="w-full py-4">
       <div className="max-w-6xl mx-auto px-4 flex items-center justify-between">
@@ -56,7 +56,7 @@ export default function Header({ logo, logoAlt = "Logo" }: HeaderProps) {
             </Link>
           </div>
           <nav className="hidden md:flex items-center gap-2">
-            {navItems.map((item) => (
+            {NAV_ITEMS.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
@@ -95,7 +95,7 @@ export default function Header({ logo, logoAlt = "Logo" }: HeaderProps) {
                   <SheetTitle className="text-left text-xl font-semibold text-foreground">Navigation</SheetTitle>
                 </SheetHeader>
                 <nav className="flex flex-col gap-4 mt-6 px-4 pb-4">
-                  {navItems.map((item) => (
+                  {NAV_ITEMS.map((item) => (
                     <Link
                       key={item.name}
                       href={item.href}

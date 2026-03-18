@@ -19,7 +19,7 @@ interface BlogCardProps {
 
 export default function BlogCard({ blog }: BlogCardProps) {
     const { title, image, urlMap, inode, modDate, urlTitle, teaser, author } = blog;
-    const authorData = author && (Array.isArray(author) ? author[0] : author);
+    const authorData = author[0];
     const authorName = authorData?.firstName && authorData?.lastName
         ? `${authorData.firstName} ${authorData.lastName}`
         : null;

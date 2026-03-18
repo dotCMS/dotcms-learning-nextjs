@@ -1,11 +1,48 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, useMemo, type FormEvent } from "react";
 import { Search, Loader2, Globe, Sparkles } from "lucide-react";
 import { searchContent, generateAIResponse } from "@/utils/searchAPI";
 import Link from "next/link";
 
 type ViewMode = "search" | "ai";
+
+interface ViewToggleProps {
+    isSearch: boolean;
+    isAI: boolean;
+    isLoading: boolean;
+    onSearch: () => void;
+    onAI: () => void;
+}
+
+function ViewToggle({ isSearch, isAI, isLoading, onSearch, onAI }: ViewToggleProps) {
+    return (
+        <div className="flex bg-gray-100 rounded-lg p-1">
+            <button
+                type="button"
+                onClick={onSearch}
+                disabled={isLoading}
+                className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-all cursor-pointer ${
+                    isSearch ? 'bg-white text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
+                }`}
+            >
+                <Search className="h-4 w-4" />
+                Search
+            </button>
+            <button
+                type="button"
+                onClick={onAI}
+                disabled={isLoading}
+                className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-all cursor-pointer ${
+                    isAI ? 'bg-white text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
+                }`}
+            >
+                <Sparkles className="h-4 w-4" />
+                Ask AI
+            </button>
+        </div>
+    );
+}
 
 interface SearchResult {
     title: string;
@@ -37,6 +74,13 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
     const isAI = currentView === 'ai';
     const [aiResponse, setAiResponse] = useState("");
     const [aiSources, setAiSources] = useState<AISource[]>([]);
+    const formattedAIResponse = useMemo(() =>
+        aiResponse
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+            .replace(/\n/g, '<br>'),
+        [aiResponse]
+    );
 
     const handleSearch = async (e: FormEvent) => {
         e.preventDefault();
@@ -114,40 +158,13 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                                         autoFocus
                                     />
                                 </div>
-                                <div className="flex bg-gray-100 rounded-lg p-1">
-                                    <button
-                                        type="submit"
-                                        onClick={() => setCurrentView('search')}
-                                        disabled={isLoading}
-                                        className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-all cursor-pointer ${
-                                            isSearch
-                                                ? 'bg-white text-foreground shadow-sm'
-                                                : 'text-muted-foreground hover:text-foreground'
-                                        }`}
-                                    >
-                                        {isLoading ? (
-                                            <Loader2 className="h-4 w-4 animate-spin" />
-                                        ) : (
-                                            <>
-                                                <Search className="h-4 w-4" />
-                                                Search
-                                            </>
-                                        )}
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => setCurrentView('ai')}
-                                        disabled={isLoading}
-                                        className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-all cursor-pointer ${
-                                            isAI
-                                                ? 'bg-white text-foreground shadow-sm'
-                                                : 'text-muted-foreground hover:text-foreground'
-                                        }`}
-                                    >
-                                        <Sparkles className="h-4 w-4" />
-                                        Ask AI
-                                    </button>
-                                </div>
+                                <ViewToggle
+                                    isSearch={isSearch}
+                                    isAI={isAI}
+                                    isLoading={isLoading}
+                                    onSearch={() => setCurrentView('search')}
+                                    onAI={() => setCurrentView('ai')}
+                                />
                             </div>
 
                             {/* Ask AI Suggestion */}
@@ -175,34 +192,13 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                     <div className="p-4">
                         <div className="flex items-center justify-between">
                             <h2 className="text-lg font-semibold text-foreground">Ask AI</h2>
-                            <div className="flex bg-gray-100 rounded-lg p-1">
-                                <button
-                                    type="button"
-                                    onClick={() => setCurrentView('search')}
-                                    disabled={isLoading}
-                                    className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-all cursor-pointer ${
-                                        isSearch
-                                            ? 'bg-white text-foreground shadow-sm'
-                                            : 'text-muted-foreground hover:text-foreground'
-                                    }`}
-                                >
-                                    <Search className="h-4 w-4" />
-                                    Search
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={() => setCurrentView('ai')}
-                                    disabled={isLoading}
-                                    className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-all cursor-pointer ${
-                                        isAI
-                                            ? 'bg-white text-foreground shadow-sm'
-                                            : 'text-muted-foreground hover:text-foreground'
-                                    }`}
-                                >
-                                    <Sparkles className="h-4 w-4" />
-                                    Ask AI
-                                </button>
-                            </div>
+                            <ViewToggle
+                                isSearch={isSearch}
+                                isAI={isAI}
+                                isLoading={isLoading}
+                                onSearch={() => setCurrentView('search')}
+                                onAI={() => setCurrentView('ai')}
+                            />
                         </div>
                     </div>
                 )}
@@ -342,12 +338,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                                                 <div className="flex-1">
                                                     <div
                                                         className="text-foreground whitespace-pre-wrap"
-                                                        dangerouslySetInnerHTML={{
-                                                            __html: aiResponse
-                                                                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                                                                .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                                                                .replace(/\n/g, '<br>')
-                                                        }}
+                                                        dangerouslySetInnerHTML={{ __html: formattedAIResponse }}
                                                     />
                                                 </div>
                                             </div>

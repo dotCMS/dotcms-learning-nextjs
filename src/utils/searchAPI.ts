@@ -26,21 +26,35 @@ interface AIResponse {
     sources: AISource[];
 }
 
+function getAIHeaders(): HeadersInit {
+    if (!process.env.NEXT_PUBLIC_DOTCMS_HOST || !process.env.NEXT_PUBLIC_DOTCMS_AUTH_TOKEN) {
+        throw new Error("dotCMS configuration is missing");
+    }
+    return {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.NEXT_PUBLIC_DOTCMS_AUTH_TOKEN}`,
+    };
+}
+
+function mapContentlet(result: Record<string, unknown>): { title: string; url: string; contentType: string; score: number } {
+    const contentlet = (result.contentlet || result) as Record<string, unknown>;
+    return {
+        title: (contentlet.title || contentlet.urlTitle || 'Untitled') as string,
+        url: (contentlet.urlMap || contentlet.urlTitle || '#') as string,
+        contentType: (contentlet.contentType || 'Unknown') as string,
+        score: (result.matches as SearchMatch[])?.[0]?.distance || 0,
+    };
+}
+
 /**
  * Search content using dotAI search API
  */
 export async function searchContent(query: string, indexName = "default", limit = 10): Promise<SearchResult[]> {
     if (!query.trim()) throw new Error("Search query is required");
-    if (!process.env.NEXT_PUBLIC_DOTCMS_HOST || !process.env.NEXT_PUBLIC_DOTCMS_AUTH_TOKEN) {
-        throw new Error("dotCMS configuration is missing");
-    }
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_DOTCMS_HOST}api/v1/ai/search`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${process.env.NEXT_PUBLIC_DOTCMS_AUTH_TOKEN}`,
-        },
+        headers: getAIHeaders(),
         body: JSON.stringify({
             prompt: query.trim(),
             indexName,
@@ -61,15 +75,13 @@ export async function searchContent(query: string, indexName = "default", limit 
         )
         ?.map((result: Record<string, unknown>) => {
             const contentlet = (result.contentlet || result) as Record<string, unknown>;
+            const base = mapContentlet(result);
             return {
-                title: (contentlet.title || contentlet.urlTitle || 'Untitled') as string,
+                ...base,
                 excerpt: (contentlet.teaser || contentlet.body || 'No description available') as string,
-                url: (contentlet.urlMap || contentlet.urlTitle || '#') as string,
                 identifier: contentlet.identifier as string,
                 modDate: contentlet.modDate as string,
-                score: (result.matches as SearchMatch[])?.[0]?.distance || 0,
                 matches: (result.matches || []) as SearchMatch[],
-                contentType: (contentlet.contentType || 'Unknown') as string
             };
         }) || [];
 }
@@ -79,17 +91,11 @@ export async function searchContent(query: string, indexName = "default", limit 
  */
 export async function generateAIResponse(prompt: string): Promise<AIResponse> {
     if (!prompt.trim()) throw new Error("Prompt is required");
-    if (!process.env.NEXT_PUBLIC_DOTCMS_HOST || !process.env.NEXT_PUBLIC_DOTCMS_AUTH_TOKEN) {
-        throw new Error("dotCMS configuration is missing");
-    }
 
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_DOTCMS_HOST}api/v1/ai/completions`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${process.env.NEXT_PUBLIC_DOTCMS_AUTH_TOKEN}`,
-            },
+            headers: getAIHeaders(),
             body: JSON.stringify({
                 prompt: prompt.trim(),
                 searchLimit: 20,
@@ -111,15 +117,7 @@ export async function generateAIResponse(prompt: string): Promise<AIResponse> {
         const data = await response.json();
 
         const aiResponse = data.openAiResponse?.choices?.[0]?.message?.content || 'No response generated';
-        const sources: AISource[] = data.dotCMSResults?.map((result: Record<string, unknown>) => {
-            const contentlet = (result.contentlet || result) as Record<string, unknown>;
-            return {
-                title: (contentlet.title || contentlet.urlTitle || 'Untitled') as string,
-                url: (contentlet.urlMap || contentlet.urlTitle || '#') as string,
-                contentType: (contentlet.contentType || 'Unknown') as string,
-                score: (result.matches as SearchMatch[])?.[0]?.distance || 0
-            };
-        }) || [];
+        const sources: AISource[] = data.dotCMSResults?.map(mapContentlet) || [];
 
         return { response: aiResponse, sources };
     } catch (error) {
