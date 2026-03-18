@@ -1,7 +1,7 @@
 "use client";
 
 import { DotCMSLayoutBody, useEditableDotCMSPage } from "@dotcms/react";
-import { DotCMSComposedPageResponse, DotCMSPageResponse } from "@dotcms/types";
+import type { DotCMSComposedPageResponse, DotCMSPageResponse, DotCMSPageRendererMode } from "@dotcms/types";
 
 import { pageComponents } from "@/components/content-types";
 import Footer from "@/components/footer/Footer";
@@ -12,8 +12,7 @@ interface PageProps {
 }
 
 export function Page({ pageContent }: PageProps) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { pageAsset, content = {} } = useEditableDotCMSPage(pageContent) as any;
+    const { pageAsset } = useEditableDotCMSPage(pageContent);
 
     return (
         <div>
@@ -25,11 +24,11 @@ export function Page({ pageContent }: PageProps) {
                 <DotCMSLayoutBody
                     page={pageAsset}
                     components={pageComponents}
-                    mode={process.env.NEXT_PUBLIC_DOTCMS_MODE as any}
+                    mode={process.env.NEXT_PUBLIC_DOTCMS_MODE as DotCMSPageRendererMode | undefined}
                 />
             </main>
 
-            {pageAsset?.layout.footer && <Footer {...content} />}
+            {pageAsset?.layout.footer && <Footer />}
         </div>
     );
 }

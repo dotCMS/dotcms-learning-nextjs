@@ -5,15 +5,15 @@ import type { DotCMSComposedPageResponse, DotCMSPageResponse } from "@dotcms/typ
 import Header from "@/components/Header";
 import BlogList from "@/components/BlogList";
 import Footer from "@/components/footer/Footer";
+import type { Blog } from "@/types/blog";
 
 interface BlogListingPageProps {
     pageContent: DotCMSComposedPageResponse<DotCMSPageResponse>;
 }
 
 export function BlogListingPage({ pageContent }: BlogListingPageProps) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { content } = useEditableDotCMSPage(pageContent) as any;
-    const blogs = content?.blogs || [];
+    const { content } = useEditableDotCMSPage(pageContent);
+    const blogs = (content as Record<string, unknown> | undefined)?.blogs as Blog[] | undefined ?? [];
 
     return (
         <div>
@@ -35,7 +35,7 @@ export function BlogListingPage({ pageContent }: BlogListingPageProps) {
                     <BlogList blogs={blogs} />
                 </div>
             </main>
-            <Footer {...content} />
+            <Footer />
         </div>
     );
 }

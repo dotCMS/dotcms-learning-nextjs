@@ -1,9 +1,10 @@
 import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
+import type { DotCMSPage, DotCMSComposedPageResponse, DotCMSPageResponse } from "@dotcms/types";
 
 import { JsonLd } from "@/components/JsonLd";
 import { getDotCMSPage } from "@/utils/getDotCMSPage";
-import { detectPageView, getVanityRedirect, buildPageMetadata } from "@/utils/pageHelpers";
+import { detectPageView, getVanityRedirect, buildPageMetadata, PageView } from "@/utils/pageHelpers";
 import { pageViews } from "@/utils/pageViews";
 import {
     buildWebPageStructuredData,
@@ -11,6 +12,7 @@ import {
     buildArticleStructuredData,
     getAbsoluteImageUrl,
 } from "@/utils/structuredData";
+import type { BlogURLContentMap } from "@/types/blog";
 
 interface PageProps {
     params: Promise<{ slug?: string[] }>;
@@ -20,11 +22,10 @@ function resolvePath(slug?: string[]): string {
     return `/${(slug ?? []).join("/")}`;
 }
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-function getPageMeta(page: any): { title?: string; description?: string } {
+function getPageMeta(page: DotCMSPage): { title?: string; description?: string } {
     return {
         title: page?.friendlyName || page?.title,
-        description: page?.seoDescription || page?.seodescription || page?.description || undefined,
+        description: page?.seodescription || undefined,
     };
 }
 
@@ -37,10 +38,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         if (!pageData) return { title: "Not found" };
 
         const view = detectPageView(pageData);
-        const page = pageData.pageAsset?.page as any;
+        const page = pageData.pageAsset?.page;
 
         if (view === "detail") {
-            const urlContentMap = pageData.pageAsset?.urlContentMap as any;
+            const urlContentMap = pageData.pageAsset?.urlContentMap as BlogURLContentMap | undefined;
             const title = urlContentMap?.title ? `${urlContentMap.title} - Blog` : "Blog";
             const description = urlContentMap?.description || urlContentMap?.teaser || undefined;
             const imageUrl = urlContentMap?.image?.idPath
@@ -66,12 +67,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
 }
 
-function buildStructuredData(pageData: any, view: string, path: string) {
+function buildStructuredData(pageData: DotCMSComposedPageResponse<DotCMSPageResponse>, view: PageView, path: string) {
     const pageAsset = pageData?.pageAsset;
     const page = pageAsset?.page;
 
     if (view === "detail") {
-        const urlContentMap = pageAsset?.urlContentMap;
+        const urlContentMap = pageAsset?.urlContentMap as BlogURLContentMap | undefined;
         const author = urlContentMap?.author?.[0];
         const authorName = author
             ? [author.firstName, author.lastName].filter(Boolean).join(" ")

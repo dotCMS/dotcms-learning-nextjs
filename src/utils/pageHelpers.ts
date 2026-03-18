@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
+import type { DotCMSComposedPageResponse, DotCMSPageResponse } from "@dotcms/types";
 import { toAbsoluteUrl } from "./structuredData";
 
 export type PageView = "detail" | "blog-listing" | "page";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-export function detectPageView(pageData: any): PageView {
+export function detectPageView(pageData: DotCMSComposedPageResponse<DotCMSPageResponse>): PageView {
     const url: string = pageData?.pageAsset?.page?.url ?? "";
 
     if (url.startsWith("/blog/") && url.split("/").length > 2) return "detail";
@@ -14,7 +13,7 @@ export function detectPageView(pageData: any): PageView {
     return "page";
 }
 
-export function getVanityRedirect(pageData: any): string | null {
+export function getVanityRedirect(pageData: DotCMSComposedPageResponse<DotCMSPageResponse>): string | null {
     const vanityUrl = pageData?.pageAsset?.vanityUrl;
     const action = vanityUrl?.action ?? 0;
     if (action > 200 && vanityUrl?.forwardTo) {

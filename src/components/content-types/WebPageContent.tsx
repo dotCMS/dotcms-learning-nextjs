@@ -5,15 +5,9 @@ import { enableBlockEditorInline } from "@dotcms/uve";
 import { DotCMSBlockEditorRenderer } from "@dotcms/react";
 import { DotCMSBasicContentlet } from "@dotcms/types";
 
+import type { BlockEditorNode } from "@dotcms/types";
 import { useIsEditMode } from "@/hooks/useIsEditMode";
 import { customRenderers } from "@/utils/blockEditorRenderers";
-
-interface BlockEditorNode {
-    type: string;
-    attrs?: Record<string, unknown>;
-    content?: BlockEditorNode[];
-    text?: string;
-}
 
 type WebPageContentProps = DotCMSBasicContentlet & {
     body?: BlockEditorNode;
@@ -47,7 +41,7 @@ function WebPageContent(props: WebPageContentProps) {
                 <div onClick={handleClick}>
                     {body && (
                         <DotCMSBlockEditorRenderer
-                            blocks={body as any}
+                            blocks={body}
                             className={blockEditorClasses}
                             customRenderers={customRenderers}
                         />

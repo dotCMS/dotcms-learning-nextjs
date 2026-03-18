@@ -8,23 +8,22 @@ import {
     DotCMSBlockEditorRenderer,
     useEditableDotCMSPage,
 } from "@dotcms/react";
+import type { DotCMSComposedPageResponse, DotCMSPageResponse, DotCMSBasicContentlet } from "@dotcms/types";
 
 import { useIsEditMode } from "@/hooks/useIsEditMode";
 import Footer from "@/components/footer/Footer";
 import Header from "@/components/Header";
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { BlogURLContentMap } from "@/types/blog";
 
 interface DetailPageProps {
-    pageContent: any;
+    pageContent: DotCMSComposedPageResponse<DotCMSPageResponse>;
 }
 
 const BASE_EDITOR_CLASSES = "max-w-none text-muted-foreground text-base md:text-base lg:text-lg font-medium leading-relaxed";
 
 export function DetailPage({ pageContent }: DetailPageProps) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { pageAsset, content } = useEditableDotCMSPage(pageContent) as any;
-    const { urlContentMap } = pageAsset || {};
+    const { pageAsset } = useEditableDotCMSPage(pageContent);
+    const urlContentMap = pageAsset?.urlContentMap as BlogURLContentMap | undefined;
     const { body } = urlContentMap || {};
     const isEditMode = useIsEditMode();
     const blockEditorClasses = isEditMode
@@ -32,8 +31,8 @@ export function DetailPage({ pageContent }: DetailPageProps) {
         : BASE_EDITOR_CLASSES;
 
     const handleClick = () => {
-        if (isEditMode) {
-            enableBlockEditorInline(urlContentMap, "body");
+        if (isEditMode && urlContentMap) {
+            enableBlockEditorInline(urlContentMap as unknown as DotCMSBasicContentlet, "body");
         }
     };
 
@@ -107,7 +106,7 @@ export function DetailPage({ pageContent }: DetailPageProps) {
                 </article>
             </main>
 
-            {pageAsset?.layout.footer && <Footer {...content} />}
+            {pageAsset?.layout.footer && <Footer />}
         </div>
     );
 }

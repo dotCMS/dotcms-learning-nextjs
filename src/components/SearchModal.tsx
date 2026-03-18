@@ -33,8 +33,8 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [hasSearched, setHasSearched] = useState(false);
     const [currentView, setCurrentView] = useState<ViewMode>('search');
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const activeView = currentView as any;
+    const isSearch = currentView === 'search';
+    const isAI = currentView === 'ai';
     const [aiResponse, setAiResponse] = useState("");
     const [aiSources, setAiSources] = useState<AISource[]>([]);
 
@@ -99,7 +99,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
             {/* Modal */}
             <div className="relative w-full max-w-2xl max-h-[80vh] bg-background border border-border rounded-lg shadow-lg flex flex-col">
                 {/* Search Form - only show in search view */}
-                {activeView === 'search' && (
+                {isSearch && (
                     <form onSubmit={handleSearch} className="p-4">
                         <div className="space-y-3">
                             <div className="flex gap-2">
@@ -120,7 +120,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                                         onClick={() => setCurrentView('search')}
                                         disabled={isLoading}
                                         className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-all cursor-pointer ${
-                                            activeView === 'search'
+                                            isSearch
                                                 ? 'bg-white text-foreground shadow-sm'
                                                 : 'text-muted-foreground hover:text-foreground'
                                         }`}
@@ -139,7 +139,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                                         onClick={() => setCurrentView('ai')}
                                         disabled={isLoading}
                                         className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-all cursor-pointer ${
-                                            activeView === 'ai'
+                                            isAI
                                                 ? 'bg-white text-foreground shadow-sm'
                                                 : 'text-muted-foreground hover:text-foreground'
                                         }`}
@@ -171,7 +171,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                 )}
 
                 {/* AI View Header */}
-                {activeView === 'ai' && (
+                {isAI && (
                     <div className="p-4">
                         <div className="flex items-center justify-between">
                             <h2 className="text-lg font-semibold text-foreground">Ask AI</h2>
@@ -181,7 +181,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                                     onClick={() => setCurrentView('search')}
                                     disabled={isLoading}
                                     className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-all cursor-pointer ${
-                                        activeView === 'search'
+                                        isSearch
                                             ? 'bg-white text-foreground shadow-sm'
                                             : 'text-muted-foreground hover:text-foreground'
                                     }`}
@@ -194,7 +194,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                                     onClick={() => setCurrentView('ai')}
                                     disabled={isLoading}
                                     className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-all cursor-pointer ${
-                                        activeView === 'ai'
+                                        isAI
                                             ? 'bg-white text-foreground shadow-sm'
                                             : 'text-muted-foreground hover:text-foreground'
                                     }`}
@@ -208,7 +208,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                 )}
 
                 {/* AI Chat Form */}
-                {activeView === 'ai' && (
+                {isAI && (
                     <div className="p-4">
                         {/* AI Empty State */}
                         {!hasSearched && (
@@ -271,7 +271,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                 )}
 
                 {/* Search Results */}
-                {activeView === 'search' && (
+                {isSearch && (
                     <div className="flex-1 overflow-y-auto">
                         {hasSearched && (
                             <div className="p-4 border-t border-border">
@@ -322,7 +322,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                 )}
 
                 {/* AI Chat Results */}
-                {activeView === 'ai' && (
+                {isAI && (
                     <div className="flex-1 overflow-y-auto">
                         {hasSearched && (
                             <div className="p-4 border-t border-border">

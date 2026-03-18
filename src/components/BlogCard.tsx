@@ -5,6 +5,7 @@ import { editContentlet } from "@dotcms/uve";
 import Image from "next/image";
 import Link from "next/link";
 import type { Blog } from "@/types/blog";
+import type { Contentlet } from "@dotcms/types";
 
 const dateFormatOptions: Intl.DateTimeFormatOptions = {
     year: "numeric",
@@ -29,7 +30,7 @@ export default function BlogCard({ blog }: BlogCardProps) {
         <div className="flex size-full flex-col gap-2 p-3 bg-[#fdfdfb] rounded-2xl border group transition-all duration-200 hover:shadow-lg cursor-pointer relative">
             {isEditMode && (
                 <button
-                    onClick={() => editContentlet(blog as any)}
+                    onClick={() => editContentlet(blog as Contentlet<Blog>)}
                     className="absolute top-2 right-2 z-10 bg-blue-500 text-white rounded-md py-2 px-4 shadow-md hover:bg-blue-600"
                 >
                     Edit

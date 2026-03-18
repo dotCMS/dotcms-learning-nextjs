@@ -3,32 +3,17 @@
 import { useState } from "react"
 import Image from "next/image";
 import { DotCMSBlockEditorRenderer } from "@dotcms/react";
+import type { CustomRendererProps } from "@dotcms/react";
+import type { BlockEditorNode } from "@dotcms/types";
 
-interface BlockNode {
-    type?: string;
-    text?: string;
-    content?: BlockNode[];
-    attrs?: Record<string, unknown>;
-}
-
-interface RendererProps {
-    node?: BlockNode;
-    attrs?: Record<string, unknown>;
-    children?: React.ReactNode;
-    src?: string;
-    alt?: string;
-    title?: string;
-    data?: { identifier?: string };
-}
-
-function extractTextFromNode(node: BlockNode | null): string {
+function extractTextFromNode(node: BlockEditorNode | null): string {
     if (!node) return ""
     if (node.type === "text") return node.text ?? ""
     if (Array.isArray(node.content)) return node.content.map(extractTextFromNode).join("")
     return ""
 }
 
-function getFirstHeaderCellText(tableNode: BlockNode | null): string {
+function getFirstHeaderCellText(tableNode: BlockEditorNode | null): string {
     const rows = tableNode?.content ?? []
     const headerRow = rows[0]
     const cells = headerRow?.content ?? []
@@ -36,11 +21,11 @@ function getFirstHeaderCellText(tableNode: BlockNode | null): string {
     return extractTextFromNode(firstCell).trim().toLowerCase()
 }
 
-function cellDoc(content: BlockNode[] | undefined) {
+function cellDoc(content: BlockEditorNode[] | undefined): BlockEditorNode {
     return { type: "doc", attrs: {}, content: content ?? [] }
 }
 
-function TableAsAccordion({ node }: { node: BlockNode }) {
+function TableAsAccordion({ node }: { node: BlockEditorNode }) {
     const [openIndices, setOpenIndices] = useState<Set<number>>(() => new Set())
     const rows = node?.content ?? []
     const headerRow = rows[0]
@@ -48,7 +33,7 @@ function TableAsAccordion({ node }: { node: BlockNode }) {
     if (!headerRow || !bodyRow) return null
     const headerCells = headerRow.content ?? []
     const bodyCells = bodyRow.content ?? []
-    const items: { title: string; content: BlockNode[] }[] = []
+    const items: { title: string; content: BlockEditorNode[] }[] = []
     for (let i = 1; i < headerCells.length; i++) {
         const title = extractTextFromNode(headerCells[i]).trim()
         const cellContent = bodyCells[i]?.content ?? []
@@ -86,7 +71,7 @@ function TableAsAccordion({ node }: { node: BlockNode }) {
                         {isOpen && (
                             <div className="bg-muted/50 border-t border-border px-5 py-5 text-foreground text-[15px] leading-relaxed [&_p]:mb-3 [&_p]:text-[15px] [&_p]:text-foreground [&_p:last-child]:mb-0 [&_ul]:my-3 [&_ul]:pl-6 [&_ul]:list-disc [&_li]:mb-2 [&_li]:leading-relaxed [&_li]:text-foreground [&_li]:text-[15px]">
                                 <DotCMSBlockEditorRenderer
-                                    blocks={cellDoc(item.content) as any}
+                                    blocks={cellDoc(item.content)}
                                     customRenderers={customRenderers}
                                     className="[&_p]:text-foreground [&_p]:text-[15px]"
                                 />
@@ -99,7 +84,7 @@ function TableAsAccordion({ node }: { node: BlockNode }) {
     )
 }
 
-function TableDefault({ node }: { node: BlockNode }) {
+function TableDefault({ node }: { node: BlockEditorNode }) {
     const rows = node?.content ?? []
     const headerRow = rows[0]
     const bodyRows = rows.slice(1)
@@ -117,7 +102,7 @@ function TableDefault({ node }: { node: BlockNode }) {
                                     rowSpan={(cell.attrs?.rowspan as number) ?? 1}
                                 >
                                     <DotCMSBlockEditorRenderer
-                                        blocks={cellDoc(cell.content) as any}
+                                        blocks={cellDoc(cell.content)}
                                         customRenderers={customRenderers}
                                         className="[&_p]:mb-0 [&_p]:text-inherit"
                                     />
@@ -137,7 +122,7 @@ function TableDefault({ node }: { node: BlockNode }) {
                                     rowSpan={(cell.attrs?.rowspan as number) ?? 1}
                                 >
                                     <DotCMSBlockEditorRenderer
-                                        blocks={cellDoc(cell.content) as any}
+                                        blocks={cellDoc(cell.content)}
                                         customRenderers={customRenderers}
                                         className="[&_p]:mb-0 [&_p]:text-foreground"
                                     />
@@ -151,7 +136,7 @@ function TableDefault({ node }: { node: BlockNode }) {
     )
 }
 
-function TableRenderer({ node }: { node: BlockNode }) {
+function TableRenderer({ node }: { node: BlockEditorNode }) {
     const firstHeaderText = getFirstHeaderCellText(node)
     if (firstHeaderText === "accordion") {
         return <TableAsAccordion node={node} />
@@ -159,7 +144,7 @@ function TableRenderer({ node }: { node: BlockNode }) {
     return <TableDefault node={node} />
 }
 
-function GridBlock({ node, children }: { node?: BlockNode; children?: React.ReactNode }) {
+function GridBlock({ node, children }: { node?: BlockEditorNode; children?: React.ReactNode }) {
     const columns = (node?.attrs?.columns as number[]) ?? [6, 6]
     const gridTemplateColumns = columns.map((c) => `${c}fr`).join(" ")
     return (
@@ -176,9 +161,9 @@ function GridColumn({ children }: { children?: React.ReactNode }) {
     return <div className="min-w-0">{children}</div>
 }
 
-export const customRenderers: Record<string, React.FC<RendererProps>> = {
+export const customRenderers: Record<string, React.FC<CustomRendererProps>> = {
     dotImage: (props) => {
-        const attrs = props.node?.attrs ?? props.attrs ?? props
+        const attrs = props.node?.attrs ?? {}
         const data = attrs.data as { identifier?: string } | undefined;
         const src = typeof data === "object" && data?.identifier
             ? data.identifier
@@ -201,7 +186,7 @@ export const customRenderers: Record<string, React.FC<RendererProps>> = {
     },
 
     table: (props) => {
-        const node = props.node ?? (props as unknown as BlockNode)
+        const node = props.node
         const rows = node?.content
         if (!Array.isArray(rows)) return null
         return <TableRenderer node={node} />
