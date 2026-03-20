@@ -19,7 +19,7 @@ interface DetailPageProps {
     pageContent: DotCMSComposedPageResponse<DotCMSPageResponse>;
 }
 
-const BASE_EDITOR_CLASSES = "max-w-none text-muted-foreground text-base md:text-base lg:text-lg font-medium leading-relaxed";
+const BASE_EDITOR_CLASSES = "prose prose-slate max-w-none prose-img:rounded-xl prose-a:text-primary hover:prose-a:text-primary-dark [&_li_p]:my-0";
 
 export function DetailPage({ pageContent }: DetailPageProps) {
     const { pageAsset } = useEditableDotCMSPage(pageContent);
@@ -93,11 +93,10 @@ export function DetailPage({ pageContent }: DetailPageProps) {
                             </div>
                         )}
 
-                        <div onClick={handleClick} className="[&_p]:text-muted-foreground [&_p]:text-sm [&_p]:md:text-base [&_p]:lg:text-base [&_p]:font-normal [&_p]:leading-relaxed [&_p]:mb-4 [&_h1]:text-foreground [&_h1]:text-lg [&_h1]:md:text-xl [&_h1]:lg:text-2xl [&_h1]:font-semibold [&_h1]:leading-tight [&_h1]:mb-6 [&_h1]:mt-8 [&_h2]:text-foreground [&_h2]:text-lg [&_h2]:md:text-xl [&_h2]:lg:text-2xl [&_h2]:font-semibold [&_h2]:leading-tight [&_h2]:mb-6 [&_h2]:mt-8 [&_h3]:text-foreground [&_h3]:text-base [&_h3]:md:text-lg [&_h3]:lg:text-xl [&_h3]:font-semibold [&_h3]:leading-tight [&_h3]:mb-4 [&_h3]:mt-6 [&_ul]:mb-4 [&_ul]:mt-4 [&_ol]:mb-4 [&_ol]:mt-4 [&_li]:text-muted-foreground [&_li]:text-sm [&_li]:md:text-base [&_li]:lg:text-base [&_li]:font-normal [&_li]:leading-relaxed [&_li]:mb-2 [&_ul]:pl-6 [&_ol]:pl-6 [&_ul]:list-disc [&_ol]:list-decimal [&_a]:text-primary [&_a]:hover:text-primary-dark [&_strong]:text-foreground [&_strong]:font-semibold [&_img]:rounded-xl [&_img]:my-8 [&_img]:w-full [&_img]:h-auto [&_img]:object-cover">
+                        <div onClick={handleClick} className={blockEditorClasses}>
                             {body && (
                                 <DotCMSBlockEditorRenderer
                                     blocks={body}
-                                    className={blockEditorClasses}
                                     customRenderers={customRenderers}
                                 />
                             )}
