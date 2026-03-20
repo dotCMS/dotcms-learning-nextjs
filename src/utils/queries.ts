@@ -23,28 +23,16 @@ export const blogQuery = `
     }
 `;
 
-
 export const navigationQuery = `
 DotNavigation(uri: "/", depth: 2) {
-    ...NavProps
-    children {
-        ...NavProps
-    }
-}
-`;
-
-export const fragmentNav = `
-fragment NavProps on DotNavigation {
-    code
-    folder
-    hash
-    host
     href
-    languageId
-    order
     target
     title
-    type
+    children {
+        href
+        target
+        title
+    }
 }
 `;
 
@@ -98,17 +86,14 @@ export const homeGraphQL = {
         }
     `,
     content: { blogs: blogQuery, navigation: navigationQuery },
-    fragments: [fragmentNav],
 };
 
 export const pageGraphQL = {
     content: { navigation: navigationQuery },
-    fragments: [fragmentNav],
 };
 
 export const blogListGraphQL = {
     content: { blogs: blogQuery, navigation: navigationQuery },
-    fragments: [fragmentNav],
 };
 
 export const blogDetailGraphQL = {
@@ -129,5 +114,4 @@ export const blogDetailGraphQL = {
         }
     `,
     content: { navigation: navigationQuery },
-    fragments: [fragmentNav],
 };
