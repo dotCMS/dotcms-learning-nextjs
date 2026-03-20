@@ -18,7 +18,7 @@ interface BlogCardProps {
 }
 
 export default function BlogCard({ blog }: BlogCardProps) {
-    const { title, image, urlMap, modDate, urlTitle, teaser, author } = blog;
+    const { title, image, urlMap, modDate, urlTitle, description, author } = blog;
     const authorData = author?.[0];
     const authorName = authorData?.firstName && authorData?.lastName
         ? `${authorData.firstName} ${authorData.lastName}`
@@ -60,10 +60,10 @@ export default function BlogCard({ blog }: BlogCardProps) {
                     <a href={urlMap || "#"} className="font-bold text-foreground text-lg group-hover:text-primary transition-colors duration-200">
                         {title}
                     </a>
-                    {teaser && (
+                    {description && (
                         <div className="line-clamp-4">
                             <p className="text-muted-foreground">
-                                {teaser}
+                                {description}
                             </p>
                         </div>
                     )}

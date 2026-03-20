@@ -3,21 +3,17 @@ export const blogQuery = `
         title
         identifier
         ... on Blog {
-            inode
             urlMap
             modDate
             urlTitle
+            description
             author {
                 firstName
                 lastName
-                inode
             }
             image {
                 title
                 idPath
-                width
-                height
-                focalPoint
             }
         }
     }
@@ -50,9 +46,6 @@ export const homeGraphQL = {
                             image {
                                 title
                                 idPath
-                                width
-                                height
-                                focalPoint
                             }
                             buttonText
                         }
@@ -62,22 +55,17 @@ export const homeGraphQL = {
                         blogs {
                             identifier
                             title
-                            description
-                            inode
                             urlMap
                             modDate
                             urlTitle
+                            description
                             author {
                                 firstName
                                 lastName
-                                inode
                             }
                             image {
                                 title
                                 idPath
-                                width
-                                height
-                                focalPoint
                             }
                         }
                     }
@@ -103,8 +91,6 @@ export const blogDetailGraphQL = {
                 author {
                     firstName
                     lastName
-                    title
-                    inode
                 }
                 image {
                     idPath

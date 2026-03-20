@@ -18,7 +18,6 @@ export interface Blog extends DotCMSBasicContentlet {
     urlMap: string | null;
     author: BlogAuthor[];
     image: BlogImage | null;
-    teaser?: string;
     description?: string;
 }
 
