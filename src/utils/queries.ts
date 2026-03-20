@@ -33,7 +33,7 @@ DotNavigation(uri: "/", depth: 2) {
 `;
 
 export const homeGraphQL = {
-    page: `
+  page: `
         containers {
             containerContentlets {
                 contentlets {
@@ -54,19 +54,19 @@ export const homeGraphQL = {
             }
         }
     `,
-    content: { blogs: blogQuery, navigation: navigationQuery },
+  content: { blogs: blogQuery, navigation: navigationQuery },
 };
 
 export const pageGraphQL = {
-    content: { navigation: navigationQuery },
+  content: { navigation: navigationQuery },
 };
 
 export const blogListGraphQL = {
-    content: { blogs: blogQuery, navigation: navigationQuery },
+  content: { blogs: blogQuery, navigation: navigationQuery },
 };
 
 export const blogDetailGraphQL = {
-    page: `
+  page: `
         urlContentMap {
             ... on Blog {
                 author {
@@ -80,5 +80,5 @@ export const blogDetailGraphQL = {
             }
         }
     `,
-    content: { navigation: navigationQuery },
+  content: { navigation: navigationQuery },
 };

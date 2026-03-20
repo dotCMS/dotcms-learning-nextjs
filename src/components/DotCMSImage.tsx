@@ -4,14 +4,16 @@ import ImageLoader from "@/utils/imageLoader";
 export type DotCMSImageSrc = { idPath?: string; identifier?: string } | string;
 
 type DotCMSImageProps = Omit<ImageProps, "src" | "loader"> & {
-    src: DotCMSImageSrc;
+  src: DotCMSImageSrc;
 };
 
 function resolveSrc(src: DotCMSImageSrc): string {
-    if (typeof src === "object") return src.idPath || src.identifier || "";
-    return src;
+  if (typeof src === "object") return src.idPath || src.identifier || "";
+  return src;
 }
 
 export default function DotCMSImage({ src, alt, ...props }: DotCMSImageProps) {
-    return <Image {...props} alt={alt} src={resolveSrc(src)} loader={ImageLoader} />;
+  return (
+    <Image {...props} alt={alt} src={resolveSrc(src)} loader={ImageLoader} />
+  );
 }
