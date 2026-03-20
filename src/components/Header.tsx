@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Menu, Search } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import SearchModal from "./SearchModal"
@@ -45,9 +46,11 @@ export default function Header({ logo, logoAlt = "Logo" }: HeaderProps) {
           <div className="flex items-center gap-3">
             <Link href="/" className="flex items-center text-foreground text-xl font-semibold hover:text-[#0369a1] transition-colors">
               {logo ? (
-                <img
+                <Image
                   src={logo}
                   alt={logoAlt}
+                  height={32}
+                  width={120}
                   className="h-8 w-auto"
                 />
               ) : (
