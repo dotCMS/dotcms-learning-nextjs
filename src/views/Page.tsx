@@ -10,6 +10,7 @@ interface PageProps {
 }
 
 export function Page({ pageContent }: PageProps) {
+    // TODO: we're getting the blogs from the graphql query
     const { pageAsset } = useEditableDotCMSPage(pageContent);
 
     return (

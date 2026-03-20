@@ -1,6 +1,6 @@
 import type { ComponentType } from "react";
 import type { Metadata } from "next";
-import type { DotCMSComposedPageResponse, DotCMSPage, DotCMSPageResponse } from "@dotcms/types";
+import type { DotCMSComposedPageResponse, DotCMSGraphQLParams, DotCMSPage, DotCMSPageResponse } from "@dotcms/types";
 import {
     toAbsoluteUrl,
     buildWebPageStructuredData,
@@ -10,6 +10,7 @@ import {
 } from "./structuredData";
 import type { BlogURLContentMap } from "@/types/blog";
 import type { PageView } from "./pageView";
+import { homeGraphQL, pageGraphQL, blogListGraphQL, blogDetailGraphQL } from "./queries";
 
 import { Page } from "@/views/Page";
 import { DetailPage } from "@/views/DetailPage";
@@ -29,6 +30,7 @@ interface PageConfig {
     component: ViewComponent;
     metadata: MetadataBuilder;
     structuredData: StructuredDataBuilder;
+    query: DotCMSGraphQLParams;
 }
 
 function getPageMeta(page: DotCMSPage): { title?: string; description?: string } {
@@ -73,8 +75,21 @@ function buildPageMetadata({
 }
 
 export const pageConfig: Record<PageView, PageConfig> = {
+    home: {
+        component: Page,
+        query: homeGraphQL,
+        metadata: (pageData, path) => {
+            const { title, description } = getPageMeta(pageData.pageAsset?.page);
+            return buildPageMetadata({ title, description, path });
+        },
+        structuredData: (pageData, path) => {
+            const { title, description } = getPageMeta(pageData.pageAsset?.page);
+            return buildWebPageStructuredData({ title, description, path });
+        },
+    },
     page: {
         component: Page,
+        query: pageGraphQL,
         metadata: (pageData, path) => {
             const { title, description } = getPageMeta(pageData.pageAsset?.page);
             return buildPageMetadata({ title, description, path });
@@ -86,6 +101,7 @@ export const pageConfig: Record<PageView, PageConfig> = {
     },
     blog: {
         component: BlogListingPage,
+        query: blogListGraphQL,
         metadata: (pageData, path) => {
             const { title: pageTitle, description } = getPageMeta(pageData.pageAsset?.page);
             const title = pageTitle ? `${pageTitle} - Blog` : "Blog";
@@ -103,7 +119,8 @@ export const pageConfig: Record<PageView, PageConfig> = {
     },
     "blog-detail": {
         component: DetailPage,
-        metadata: (pageData, path) => {
+        query: blogDetailGraphQL,
+        metadata: (pageData: PageData, path: string) => {
             const urlContentMap = pageData.pageAsset?.urlContentMap as BlogURLContentMap | undefined;
             const title = urlContentMap?.title ? `${urlContentMap.title} - Blog` : "Blog";
             const description = urlContentMap?.description || urlContentMap?.teaser || undefined;

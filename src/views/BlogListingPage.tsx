@@ -10,6 +10,7 @@ interface BlogListingPageProps {
 }
 
 export function BlogListingPage({ pageContent }: BlogListingPageProps) {
+    // TODO: we're getting the blogs here from the `content` property in the page get
     const { content } = useEditableDotCMSPage(pageContent);
     const blogs = (content as Record<string, unknown> | undefined)?.blogs as Blog[] | undefined ?? [];
 

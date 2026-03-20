@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 import { JsonLd } from "@/components/JsonLd";
 import { getDotCMSPage } from "@/utils/getDotCMSPage";
-import { detectPageView, getVanityRedirect } from "@/utils/pageView";
+import { detectPageViewFromPath, getVanityRedirect } from "@/utils/pageView";
 import { pageConfig } from "@/utils/pageConfig";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -21,11 +21,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const path = resolvePath(slug);
 
     try {
-        const pageData = await getDotCMSPage(path);
+        const view = detectPageViewFromPath(path);
+        const config = pageConfig[view];
+        const pageData = await getDotCMSPage(path, config.query);
         if (!pageData) return { title: "Not found" };
 
-        const view = detectPageView(pageData);
-        return pageConfig[view].metadata(pageData, path);
+        return config.metadata(pageData, path);
     } catch {
         return { title: "Not found" };
     }
@@ -34,7 +35,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function CatchAllPage({ params }: PageProps) {
     const { slug } = await params;
     const path = resolvePath(slug);
-    const pageContent = await getDotCMSPage(path);
+
+    const view = detectPageViewFromPath(path);
+    const config = pageConfig[view];
+    const pageContent = await getDotCMSPage(path, config.query);
 
     if (!pageContent) return notFound();
 
@@ -45,8 +49,6 @@ export default async function CatchAllPage({ params }: PageProps) {
 
     const layout = pageContent.pageAsset?.layout;
     const navItems = pageContent.content?.navigation?.children ?? [];
-    const view = detectPageView(pageContent);
-    const config = pageConfig[view];
     const ViewComponent = config.component;
     const jsonLd = config.structuredData(pageContent, path);
 

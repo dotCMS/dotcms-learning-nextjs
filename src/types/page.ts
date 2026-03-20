@@ -6,6 +6,6 @@ export interface DotCMSPageNavigation extends DotCMSNavigationItem {
 }
 
 export interface DotCMSPageContent {
-    blogs: Blog[];
+    blogs?: Blog[];
     navigation: DotCMSPageNavigation;
 }
