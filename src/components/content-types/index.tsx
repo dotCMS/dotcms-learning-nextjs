@@ -12,9 +12,11 @@ import VtlInclude from "./VtlInclude";
 import Video from "./Video";
 import WebPageContent from "./WebPageContent";
 import BlogList from "../BlogList";
+import BlogCard from "../BlogCard";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const pageComponents: Record<string, ComponentType<any>> = {
+  Blog: BlogCard,
   Banner,
   Code,
   BannerCarousel,

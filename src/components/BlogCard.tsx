@@ -13,11 +13,7 @@ const dateFormatOptions: Intl.DateTimeFormatOptions = {
   day: "numeric",
 };
 
-interface BlogCardProps {
-  blog: Blog;
-}
-
-export default function BlogCard({ blog }: BlogCardProps) {
+export default function BlogCard(blog: Blog) {
   const { title, image, urlMap, modDate, urlTitle, description, author } = blog;
   const authorData = author?.[0];
   const authorName =
