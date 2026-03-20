@@ -21,7 +21,7 @@ interface PageProps {
 
 function getBlogDetailMeta(urlContentMap: BlogURLContentMap | undefined) {
   const title = urlContentMap?.title ? `${urlContentMap.title} - Blog` : "Blog";
-  const description = urlContentMap?.description || urlContentMap?.teaser;
+  const description = urlContentMap?.description;
   const imageUrl = urlContentMap?.image?.idPath
     ? getAbsoluteImageUrl(urlContentMap.image.idPath) ?? undefined
     : undefined;

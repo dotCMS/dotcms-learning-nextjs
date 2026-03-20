@@ -30,7 +30,6 @@ export interface Blog extends DotCMSBasicContentlet {
 // Use Omit to override body with the correct type.
 export type BlogURLContentMap = Omit<DotCMSURLContentMap, "body"> & {
   description?: string;
-  teaser?: string;
   publishDate?: number;
   body?: { json: BlockEditorNode };
   image?: BlogImage;
