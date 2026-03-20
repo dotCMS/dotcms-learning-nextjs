@@ -1,15 +1,17 @@
 import BlogCard from "@/components/BlogCard";
 import type { Blog } from "@/types/blog";
+import type { BlogCardShow } from "@/components/content-types/BlogListContainer";
 
 interface BlogListProps {
   blogs?: Blog[];
+  show?: BlogCardShow;
 }
 
-export default function BlogList({ blogs = [] }: BlogListProps) {
+export default function BlogList({ blogs = [], show }: BlogListProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {blogs.map((blog) => (
-        <BlogCard key={blog.identifier} {...blog} />
+        <BlogCard key={blog.identifier} {...blog} show={show} />
       ))}
 
       {blogs.length === 0 && (

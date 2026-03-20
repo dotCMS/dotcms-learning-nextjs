@@ -11,8 +11,8 @@ import PageForm from "./PageForm";
 import VtlInclude from "./VtlInclude";
 import Video from "./Video";
 import WebPageContent from "./WebPageContent";
-import BlogList from "../BlogList";
 import BlogCard from "../BlogCard";
+import BlogListContainer from "./BlogListContainer";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const pageComponents: Record<string, ComponentType<any>> = {
@@ -28,16 +28,5 @@ export const pageComponents: Record<string, ComponentType<any>> = {
   VtlInclude,
   Video,
   webPageContent: WebPageContent,
-  BlogList: (props) => (
-    <section className="w-full py-4 mb-16">
-      <div className="max-w-6xl mx-auto px-4">
-        {props.title && (
-          <h2 className="text-foreground text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight mb-6">
-            {props.title}
-          </h2>
-        )}
-        <BlogList {...props} />
-      </div>
-    </section>
-  ),
+  BlogList: BlogListContainer,
 };

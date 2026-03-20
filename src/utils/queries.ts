@@ -1,24 +1,3 @@
-export const blogQuery = `
-    search(query: "+contenttype:Blog +live:true", limit: 9) {
-        title
-        identifier
-        ... on Blog {
-            urlMap
-            modDate
-            urlTitle
-            description
-            author {
-                firstName
-                lastName
-            }
-            image {
-                title
-                idPath
-            }
-        }
-    }
-`;
-
 export const navigationQuery = `
 DotNavigation(uri: "/", depth: 2) {
     href
@@ -54,7 +33,7 @@ export const homeGraphQL = {
             }
         }
     `,
-  content: { blogs: blogQuery, navigation: navigationQuery },
+  content: { navigation: navigationQuery },
 };
 
 export const pageGraphQL = {
@@ -62,7 +41,7 @@ export const pageGraphQL = {
 };
 
 export const blogListGraphQL = {
-  content: { blogs: blogQuery, navigation: navigationQuery },
+  content: { navigation: navigationQuery },
 };
 
 export const blogDetailGraphQL = {
