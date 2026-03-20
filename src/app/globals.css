@@ -20,7 +20,6 @@
   --color-primary: hsl(var(--primary));
   --color-primary-foreground: hsl(var(--primary-foreground));
   --color-primary-dark: hsl(var(--primary-dark));
-  --color-primary-light: hsl(var(--primary-light));
 
   --color-secondary: hsl(var(--secondary));
   --color-secondary-foreground: hsl(var(--secondary-foreground));
@@ -34,11 +33,7 @@
   --color-accent: hsl(var(--accent));
   --color-accent-foreground: hsl(var(--accent-foreground));
 
-  --color-popover: hsl(var(--popover));
-  --color-popover-foreground: hsl(var(--popover-foreground));
-
   --color-card: hsl(var(--card));
-  --color-card-foreground: hsl(var(--card-foreground));
 
   /* Border Radius */
   --radius-lg: var(--radius);
@@ -66,74 +61,36 @@
   --foreground: #1f1f1f; /* Near black */
 
   /* Primary Colors - Ocean Blue Theme */
-  --primary: #0284c7; /* Sky Blue 600 - vibrant ocean blue */
-  --primary-foreground: #ffffff; /* White text for contrast */
-  --primary-dark: #0369a1; /* Sky Blue 700 - darker blue for hover */
-  --primary-light: #0ea5e9; /* Sky Blue 500 - lighter blue for backgrounds */
+  --primary: #0284c7; /* Sky Blue 600 */
+  --primary-foreground: #ffffff;
+  --primary-dark: #0369a1; /* Sky Blue 700 - hover state */
 
-  /* Secondary Colors - Complementary */
-  --secondary: #e0f2fe; /* Sky Blue 50 - very light blue tint */
-  --secondary-foreground: #0c4a6e; /* Sky Blue 900 - dark blue-gray */
+  /* Secondary Colors */
+  --secondary: #e0f2fe; /* Sky Blue 50 */
+  --secondary-foreground: #0c4a6e; /* Sky Blue 900 */
 
-  /* Accent Colors - Supporting */
-  --accent: #bae6fd; /* Sky Blue 200 - light blue accent */
-  --accent-foreground: #0c4a6e; /* Dark blue text */
+  /* Accent Colors */
+  --accent: #bae6fd; /* Sky Blue 200 */
+  --accent-foreground: #0c4a6e;
 
-  /* Muted Colors - Subtle */
-  --muted: #f0f9ff; /* Sky Blue 50 - very subtle blue tint */
-  --muted-foreground: #475569; /* Slate 600 - darker gray for better readability */
-  --muted-foreground-light: #94a3b8; /* Slate 400 - light gray */
-  --muted-foreground-dark: #334155; /* Slate 700 - dark gray */
-  --card-bg: #fafbfc; /* Super subtle cool white for cards */
+  /* Muted Colors */
+  --muted: #f0f9ff; /* Sky Blue 50 */
+  --muted-foreground: #475569; /* Slate 600 */
 
-  /* Card & Popover */
-  --card: #ffffff; /* Pure white */
-  --card-foreground: #1f1f1f; /* Near black */
-  --popover: #ffffff; /* Pure white */
-  --popover-foreground: #1f1f1f; /* Near black */
+  /* Card */
+  --card: #ffffff;
 
   /* Borders & Inputs */
-  --border: #e5e7eb; /* Light gray border */
-  --border-light: #f1f5f9; /* Lighter border */
-  --border-dark: #cbd5e1; /* Darker border */
-  --input: #0284c7; /* Input border */
-  --ring: #0284c7; /* Focus ring using primary */
+  --border: #e5e7eb;
+  --input: #0284c7;
+  --ring: #0284c7;
 
   /* Destructive */
-  --destructive: #dc2626; /* Red for errors */
-  --destructive-foreground: #ffffff; /* White text */
-
-  /* Charts - Harmonious palette */
-  --chart-1: #0284c7; /* Primary ocean blue */
-  --chart-2: #0ea5e9; /* Sky blue */
-  --chart-3: #f59e0b; /* Amber - warm accent */
-  --chart-4: #10b981; /* Emerald - tropical green */
-  --chart-5: #06b6d4; /* Cyan - ocean teal */
-
-  /* Sidebar - Consistent with theme */
-  --sidebar: #f0f9ff; /* Very light blue */
-  --sidebar-foreground: #1f1f1f; /* Dark text */
-  --sidebar-primary: #0284c7; /* Primary ocean blue */
-  --sidebar-primary-foreground: #ffffff; /* White text */
-  --sidebar-accent: #bae6fd; /* Light blue */
-  --sidebar-accent-foreground: #0c4a6e; /* Dark blue text */
-  --sidebar-border: #0284c7; /* Subtle border */
-  --sidebar-ring: #0284c7; /* Primary ocean blue */
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
 
   /* Border Radius */
   --radius: 0.625rem;
-
-  /* Tailwind Shadow Override */
-  --tw-shadow-color: #0284c7; /* Use primary color for shadows */
-}
-
-* {
-  border-color: var(--border);
-}
-
-body {
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
 }
 
 @theme inline {
@@ -144,9 +101,6 @@ body {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
@@ -159,19 +113,6 @@ body {
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
 }
 
 
