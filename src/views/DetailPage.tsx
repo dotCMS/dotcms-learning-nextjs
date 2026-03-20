@@ -11,8 +11,6 @@ import {
 import type { DotCMSComposedPageResponse, DotCMSPageResponse, DotCMSBasicContentlet } from "@dotcms/types";
 
 import { useIsEditMode } from "@/hooks/useIsEditMode";
-import Footer from "@/components/footer/Footer";
-import Header from "@/components/Header";
 import type { BlogURLContentMap } from "@/types/blog";
 
 interface DetailPageProps {
@@ -37,11 +35,7 @@ export function DetailPage({ pageContent }: DetailPageProps) {
     };
 
     return (
-        <div>
-            {pageAsset?.layout.header && (
-                <Header />
-            )}
-            <main className="container m-auto">
+        <main className="container m-auto">
                 <article className="w-full py-12 md:py-16 lg:py-20">
                     <div className="max-w-4xl mx-auto px-4">
                         {urlContentMap?.title && (
@@ -103,9 +97,6 @@ export function DetailPage({ pageContent }: DetailPageProps) {
                         </div>
                     </div>
                 </article>
-            </main>
-
-            {pageAsset?.layout.footer && <Footer />}
-        </div>
+        </main>
     );
 }
