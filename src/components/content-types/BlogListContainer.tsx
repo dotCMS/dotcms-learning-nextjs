@@ -24,15 +24,6 @@ export default async function BlogListContainer(props: {
   };
 
   return (
-    <section className="w-full py-4 mb-16">
-      <div className="max-w-6xl mx-auto px-4">
-        {props.title && (
-          <h2 className="text-foreground text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight mb-6">
-            {props.title}
-          </h2>
-        )}
-        <BlogList blogs={result.contentlets} show={show} />
-      </div>
-    </section>
+    <BlogList blogs={result.contentlets} show={show} />
   );
 }
