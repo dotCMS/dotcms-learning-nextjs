@@ -57,15 +57,25 @@ export function DetailPage({ pageContent }: DetailPageProps) {
           <div className="flex items-center gap-4 mb-8 pb-6 border-gray-100">
             {urlContentMap?.author?.[0]?.firstName && (
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                  <span className="text-primary-foreground text-sm font-semibold">
-                    {urlContentMap.author?.[0]?.firstName?.[0]}
-                    {urlContentMap.author?.[0]?.lastName?.[0]}
-                  </span>
-                </div>
+                {urlContentMap.author[0].image?.idPath ? (
+                  <DotCMSImage
+                    className="w-8 h-8 rounded-full object-cover"
+                    src={urlContentMap.author[0].image!}
+                    width={32}
+                    height={32}
+                    alt={`${urlContentMap.author[0].firstName} ${urlContentMap.author[0].lastName}`}
+                  />
+                ) : (
+                  <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                    <span className="text-primary-foreground text-sm font-semibold">
+                      {urlContentMap.author[0].firstName[0]}
+                      {urlContentMap.author[0].lastName?.[0]}
+                    </span>
+                  </div>
+                )}
                 <span className="text-foreground font-medium">
-                  {urlContentMap.author?.[0]?.firstName}{" "}
-                  {urlContentMap.author?.[0]?.lastName}
+                  {urlContentMap.author[0].firstName}{" "}
+                  {urlContentMap.author[0].lastName}
                 </span>
               </div>
             )}

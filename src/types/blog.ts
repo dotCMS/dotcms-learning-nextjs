@@ -8,13 +8,14 @@ export interface BlogAuthor {
   firstName: string;
   lastName: string;
   inode: string;
+  image?: BlogImage;
 }
 
 export interface BlogImage {
-  idPath: string | null;
-  title: string | null;
-  width: number | null;
-  height: number | null;
+  idPath?: string;
+  title?: string;
+  width?: number;
+  height?: number;
 }
 
 export interface Blog extends DotCMSBasicContentlet {

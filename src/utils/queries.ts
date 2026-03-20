@@ -79,6 +79,10 @@ export const blogDetailGraphQL = {
                 author {
                     firstName
                     lastName
+                    image {
+                        idPath
+                        title
+                    }
                 }
                 image {
                     idPath
