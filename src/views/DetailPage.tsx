@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import DotCMSImage from "@/components/DotCMSImage";
 
 import { enableBlockEditorInline } from "@dotcms/uve";
 import { customRenderers } from "@/utils/blockEditorRenderers";
@@ -79,12 +79,12 @@ export function DetailPage({ pageContent }: DetailPageProps) {
                             )}
                         </div>
 
-                        {urlContentMap?.image?.idPath && (
+                        {urlContentMap?.image && (
                             <div className="mb-8 -mx-6 sm:-mx-8 md:-mx-12 lg:-mx-16">
                                 <div className="bg-gray-100 rounded-2xl p-2">
-                                    <Image
+                                    <DotCMSImage
                                         className="w-full h-auto object-cover rounded-xl"
-                                        src={urlContentMap.image.idPath}
+                                        src={urlContentMap.image}
                                         width={800}
                                         height={400}
                                         alt={urlContentMap?.title || "Blog post image"}

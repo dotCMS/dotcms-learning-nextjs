@@ -2,7 +2,7 @@
 
 import { useIsEditMode } from "@/hooks/useIsEditMode";
 import { editContentlet } from "@dotcms/uve";
-import Image from "next/image";
+import DotCMSImage from "@/components/DotCMSImage";
 import Link from "next/link";
 import type { Blog } from "@/types/blog";
 import type { Contentlet } from "@dotcms/types";
@@ -39,18 +39,16 @@ export default function BlogCard({ blog }: BlogCardProps) {
 
             <Link href={urlMap || "#"} className="w-full aspect-video rounded-lg overflow-hidden shrink-0 block">
                 {image ? (
-                    <picture className="relative block w-full h-full object-cover">
-                        <Image
-                            alt={urlTitle || title || ""}
-                            title={title || ""}
-                            loading="lazy"
-                            decoding="async"
-                            className="size-full object-cover"
-                            src={inode || ""}
-                            style={{ position: 'absolute', height: '100%', width: '100%', inset: '0px' }}
-                            fill={true}
-                        />
-                    </picture>
+                    <DotCMSImage
+                        alt={urlTitle || title || ""}
+                        title={title || ""}
+                        loading="lazy"
+                        decoding="async"
+                        className="size-full object-cover"
+                        src={inode || ""}
+                        style={{ position: 'absolute', height: '100%', width: '100%', inset: '0px' }}
+                        fill={true}
+                    />
                 ) : (
                     <div className="w-full h-full bg-gradient-to-br from-white/10 to-white/5 rounded-lg flex items-center justify-center">
                         <span className="text-muted-foreground">No image</span>

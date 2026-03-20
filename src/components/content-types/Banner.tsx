@@ -2,12 +2,12 @@ import { DotCMSBasicContentlet } from "@dotcms/types";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { DotCMSEditableText } from "@dotcms/react";
-import DotCMSImage from "@/components/DotCMSImage";
+import DotCMSImage, { type DotCMSImageSrc } from "@/components/DotCMSImage";
 
 type BannerProps = DotCMSBasicContentlet & {
     title?: string;
     caption?: string;
-    image?: { idPath?: string; identifier?: string } | string;
+    image?: DotCMSImageSrc;
     link?: string;
     buttonText?: string;
 };

@@ -1,7 +1,7 @@
 import Image, { type ImageProps } from "next/image";
 import ImageLoader from "@/utils/imageLoader";
 
-type DotCMSImageSrc = { idPath?: string; identifier?: string } | string;
+export type DotCMSImageSrc = { idPath?: string; identifier?: string } | string;
 
 type DotCMSImageProps = Omit<ImageProps, "src" | "loader"> & {
     src: DotCMSImageSrc;

@@ -14,6 +14,6 @@ type ViewComponent = ComponentType<ViewProps>;
 
 export const pageViews: Record<PageView, ViewComponent> = {
     page: Page,
-    detail: DetailPage,
-    "blog-listing": BlogListingPage,
+    "blog-detail": DetailPage,
+    blog: BlogListingPage,
 };

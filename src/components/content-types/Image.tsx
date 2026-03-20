@@ -1,19 +1,15 @@
-import NextImage from "next/image";
+import DotCMSImage, { type DotCMSImageSrc } from "@/components/DotCMSImage";
 
 interface ImageComponentProps {
-    fileAsset?: { inode?: string; idPath?: string } | string;
+    fileAsset?: DotCMSImageSrc;
     inode?: string;
     title?: string;
 }
 
 function ImageComponent({ fileAsset, inode, title }: ImageComponentProps) {
-    const imageSrc =
-        inode ||
-        (typeof fileAsset === "object"
-            ? fileAsset?.inode || fileAsset?.idPath
-            : fileAsset);
+    const src = inode || fileAsset;
 
-    if (!imageSrc) {
+    if (!src) {
         return null;
     }
 
@@ -21,8 +17,8 @@ function ImageComponent({ fileAsset, inode, title }: ImageComponentProps) {
         <div className="w-full py-4 md:py-8">
             <div className="max-w-6xl mx-auto px-4">
                 <div className="bg-gray-100 rounded-2xl p-2">
-                    <NextImage
-                        src={imageSrc}
+                    <DotCMSImage
+                        src={src}
                         width={1200}
                         height={675}
                         alt={title || "Image"}

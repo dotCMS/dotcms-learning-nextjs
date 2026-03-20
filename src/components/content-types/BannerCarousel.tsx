@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import DotCMSImage from "@/components/DotCMSImage";
+import DotCMSImage, { type DotCMSImageSrc } from "@/components/DotCMSImage";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -11,7 +11,7 @@ interface BannerItem {
     tag?: string;
     link?: string;
     buttonText?: string;
-    image?: { idPath?: string; identifier?: string } | string;
+    image?: DotCMSImageSrc;
 }
 
 interface BannerCarouselProps {
