@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 
 import { JsonLd } from "@/components/JsonLd";
 import { getDotCMSPage } from "@/utils/getDotCMSPage";
-import { detectPageView, getVanityRedirect, pageMetadata, pageStructuredData } from "@/utils/pageHelpers";
-import { pageViews } from "@/utils/pageViews";
+import { detectPageView, getVanityRedirect } from "@/utils/pageView";
+import { pageConfig } from "@/utils/pageConfig";
 
 interface PageProps {
     params: Promise<{ slug?: string[] }>;
@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         if (!pageData) return { title: "Not found" };
 
         const view = detectPageView(pageData);
-        return pageMetadata[view](pageData, path);
+        return pageConfig[view].metadata(pageData, path);
     } catch {
         return { title: "Not found" };
     }
@@ -42,8 +42,9 @@ export default async function CatchAllPage({ params }: PageProps) {
     }
 
     const view = detectPageView(pageContent);
-    const ViewComponent = pageViews[view];
-    const jsonLd = pageStructuredData[view](pageContent, path);
+    const config = pageConfig[view];
+    const ViewComponent = config.component;
+    const jsonLd = config.structuredData(pageContent, path);
 
     return (
         <>
