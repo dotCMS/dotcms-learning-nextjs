@@ -28,9 +28,11 @@ function getBlogDetailMeta(urlContentMap: BlogURLContentMap | undefined) {
   const publishDate = urlContentMap?.publishDate
     ? new Date(urlContentMap.publishDate).toISOString()
     : undefined;
-  const modDate = urlContentMap?.modDate
-    ? new Date(Number(urlContentMap.modDate)).toISOString()
-    : undefined;
+  const modDateMs = Number(urlContentMap?.modDate);
+  const modDate =
+    urlContentMap?.modDate && !isNaN(modDateMs)
+      ? new Date(modDateMs).toISOString()
+      : undefined;
   const author = urlContentMap?.author?.[0];
   const authorName = author
     ? [author.firstName, author.lastName].filter(Boolean).join(" ")
