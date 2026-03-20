@@ -30,8 +30,8 @@ export interface Blog extends DotCMSBasicContentlet {
 export type BlogURLContentMap = Omit<DotCMSURLContentMap, "body"> & {
   description?: string;
   teaser?: string;
-  postingDate?: string;
-  body?: BlockEditorNode;
+  publishDate?: number;
+  body?: { json: BlockEditorNode };
   image?: BlogImage;
   author?: BlogAuthor[];
 };

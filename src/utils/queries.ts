@@ -69,6 +69,13 @@ export const blogDetailGraphQL = {
   page: `
         urlContentMap {
             ... on Blog {
+                title
+                description
+                modDate
+                urlTitle
+                body {
+                    json
+                }
                 author {
                     firstName
                     lastName

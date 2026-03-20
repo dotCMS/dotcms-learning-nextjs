@@ -3,6 +3,8 @@
  * @see https://schema.org
  */
 
+import type { Metadata } from "next";
+
 interface WebPageParams {
   title?: string;
   description?: string;
@@ -27,6 +29,39 @@ export function toAbsoluteUrl(path: string): string {
   const base = getBaseUrl().replace(/\/$/, "");
   const pathStr = path.startsWith("/") ? path : `/${path}`;
   return pathStr === "/" ? base : `${base}${pathStr}`;
+}
+
+export function buildPageMetadata({
+  title,
+  description,
+  path,
+  imageUrl,
+  type = "website",
+}: {
+  title?: string;
+  description?: string;
+  path?: string;
+  imageUrl?: string;
+  type?: "website" | "article";
+}): Metadata {
+  const url = toAbsoluteUrl(path || "/") || undefined;
+  return {
+    title: title || "Page",
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url,
+      type,
+      ...(imageUrl && { images: [{ url: imageUrl }] }),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+  };
 }
 
 /**
@@ -108,4 +143,13 @@ export function getAbsoluteImageUrl(
     ? idPathOrUrl
     : `/dA/${idPathOrUrl}`;
   return `${host}${path}`;
+}
+
+export function handleVanityRedirect(
+  vanityUrl: { action?: number; forwardTo?: string } | undefined,
+  redirectFn: (url: string) => never,
+): void {
+  if ((vanityUrl?.action ?? 0) > 200 && vanityUrl?.forwardTo) {
+    redirectFn(vanityUrl.forwardTo);
+  }
 }

@@ -29,7 +29,7 @@ export function DetailPage({ pageContent }: DetailPageProps) {
   const urlContentMap = pageAsset?.urlContentMap as
     | BlogURLContentMap
     | undefined;
-  const { body } = urlContentMap || {};
+  const body = urlContentMap?.body?.json;
   const isEditMode = useIsEditMode();
   const blockEditorClasses = isEditMode
     ? `${BASE_EDITOR_CLASSES} border-2 border-solid border-cyan-400 cursor-pointer`
@@ -69,7 +69,7 @@ export function DetailPage({ pageContent }: DetailPageProps) {
                 </span>
               </div>
             )}
-            {urlContentMap?.postingDate && (
+            {urlContentMap?.publishDate && (
               <div className="flex items-center gap-2 text-muted-foreground">
                 <svg
                   className="w-4 h-4"
@@ -85,7 +85,7 @@ export function DetailPage({ pageContent }: DetailPageProps) {
                   />
                 </svg>
                 <time className="text-sm">
-                  {new Date(urlContentMap.postingDate).toLocaleDateString(
+                  {new Date(urlContentMap.publishDate).toLocaleDateString(
                     "en-US",
                     {
                       year: "numeric",

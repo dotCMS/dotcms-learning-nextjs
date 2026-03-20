@@ -3,8 +3,13 @@ import type { Metadata } from "next";
 
 import { JsonLd } from "@/components/JsonLd";
 import { getDotCMSPage } from "@/utils/getDotCMSPage";
-import { detectPageViewFromPath, getVanityRedirect } from "@/utils/pageView";
-import { pageConfig } from "@/utils/pageConfig";
+import { homeGraphQL, pageGraphQL } from "@/utils/queries";
+import {
+  buildPageMetadata,
+  buildWebPageStructuredData,
+  handleVanityRedirect,
+} from "@/utils/seo";
+import { Page } from "@/views/Page";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -16,19 +21,21 @@ function resolvePath(slug?: string[]): string {
   return `/${(slug ?? []).join("/")}`;
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const path = resolvePath(slug);
+  const query = path === "/" ? homeGraphQL : pageGraphQL;
 
   try {
-    const view = detectPageViewFromPath(path);
-    const config = pageConfig[view];
-    const pageData = await getDotCMSPage(path, config.query);
+    const pageData = await getDotCMSPage(path, query);
     if (!pageData) return { title: "Not found" };
 
-    return config.metadata(pageData, path);
+    const page = pageData.pageAsset?.page;
+    return buildPageMetadata({
+      title: page?.friendlyName || page?.title,
+      description: page?.seodescription,
+      path,
+    });
   } catch {
     return { title: "Not found" };
   }
@@ -37,28 +44,27 @@ export async function generateMetadata({
 export default async function CatchAllPage({ params }: PageProps) {
   const { slug } = await params;
   const path = resolvePath(slug);
+  const query = path === "/" ? homeGraphQL : pageGraphQL;
 
-  const view = detectPageViewFromPath(path);
-  const config = pageConfig[view];
-  const pageContent = await getDotCMSPage(path, config.query);
-
+  const pageContent = await getDotCMSPage(path, query);
   if (!pageContent) return notFound();
 
-  const vanityRedirect = getVanityRedirect(pageContent);
-  if (vanityRedirect) {
-    return redirect(vanityRedirect);
-  }
+  handleVanityRedirect(pageContent.pageAsset?.vanityUrl, redirect);
 
   const layout = pageContent.pageAsset?.layout;
   const navItems = pageContent.content?.navigation?.children ?? [];
-  const ViewComponent = config.component;
-  const jsonLd = config.structuredData(pageContent, path);
+  const page = pageContent.pageAsset?.page;
+  const jsonLd = buildWebPageStructuredData({
+    title: page?.friendlyName || page?.title,
+    description: page?.seodescription,
+    path,
+  });
 
   return (
     <>
       <JsonLd data={jsonLd} />
       {layout?.header && <Header navItems={navItems} />}
-      <ViewComponent pageContent={pageContent} />
+      <Page pageContent={pageContent} />
       {layout?.footer && <Footer />}
     </>
   );
