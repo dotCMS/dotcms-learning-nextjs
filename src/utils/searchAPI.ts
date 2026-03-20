@@ -99,7 +99,7 @@ export async function searchContent(
         const base = mapContentlet(result);
         return {
           ...base,
-          excerpt: (contentlet.teaser ||
+          excerpt: (contentlet.description ||
             contentlet.body ||
             "No description available") as string,
           identifier: contentlet.identifier as string,
