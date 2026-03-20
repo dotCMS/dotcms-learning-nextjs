@@ -1,12 +1,12 @@
-import { getNavigation } from "@/utils/getNavigation"
+import type { DotCMSNavigationItem } from "@dotcms/types";
 import { HeaderClient } from "./HeaderClient"
 
 interface HeaderProps {
+    navItems: DotCMSNavigationItem[];
     logo?: string;
     logoAlt?: string;
 }
 
-export default async function Header({ logo, logoAlt }: HeaderProps) {
-    const navItems = await getNavigation("/")
+export default function Header({ navItems, logo, logoAlt }: HeaderProps) {
     return <HeaderClient navItems={navItems} logo={logo} logoAlt={logoAlt} />
 }
