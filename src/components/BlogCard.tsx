@@ -18,7 +18,7 @@ interface BlogCardProps {
 }
 
 export default function BlogCard({ blog }: BlogCardProps) {
-    const { title, image, urlMap, inode, modDate, urlTitle, teaser, author } = blog;
+    const { title, image, urlMap, modDate, urlTitle, teaser, author } = blog;
     const authorData = author?.[0];
     const authorName = authorData?.firstName && authorData?.lastName
         ? `${authorData.firstName} ${authorData.lastName}`
@@ -37,7 +37,7 @@ export default function BlogCard({ blog }: BlogCardProps) {
                 </button>
             )}
 
-            <Link href={urlMap || "#"} className="w-full aspect-video rounded-lg overflow-hidden shrink-0 block">
+            <Link href={urlMap || "#"} className="relative w-full aspect-video rounded-lg overflow-hidden shrink-0 block">
                 {image ? (
                     <DotCMSImage
                         alt={urlTitle || title || ""}
@@ -45,8 +45,7 @@ export default function BlogCard({ blog }: BlogCardProps) {
                         loading="lazy"
                         decoding="async"
                         className="size-full object-cover"
-                        src={inode || ""}
-                        style={{ position: 'absolute', height: '100%', width: '100%', inset: '0px' }}
+                        src={image}
                         fill={true}
                     />
                 ) : (
