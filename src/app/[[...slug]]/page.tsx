@@ -6,7 +6,7 @@ import { getDotCMSPage } from "@/utils/getDotCMSPage";
 import { detectPageView, getVanityRedirect } from "@/utils/pageView";
 import { pageConfig } from "@/utils/pageConfig";
 import Header from "@/components/Header";
-import Footer from "@/components/footer/Footer";
+import Footer from "@/components/Footer";
 
 interface PageProps {
     params: Promise<{ slug?: string[] }>;
