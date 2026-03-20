@@ -5,7 +5,6 @@ import { JsonLd } from "@/components/JsonLd";
 import { getDotCMSPage } from "@/utils/getDotCMSPage";
 import { detectPageView, getVanityRedirect } from "@/utils/pageView";
 import { pageConfig } from "@/utils/pageConfig";
-import { getNavigation } from "@/utils/getNavigation";
 import Header from "@/components/Header";
 import Footer from "@/components/footer/Footer";
 
@@ -45,8 +44,8 @@ export default async function CatchAllPage({ params }: PageProps) {
     }
 
     const layout = pageContent.pageAsset?.layout;
+    const navItems = pageContent.content?.navigation?.children ?? [];
     const view = detectPageView(pageContent);
-    const navItems = await getNavigation();
     const config = pageConfig[view];
     const ViewComponent = config.component;
     const jsonLd = config.structuredData(pageContent, path);

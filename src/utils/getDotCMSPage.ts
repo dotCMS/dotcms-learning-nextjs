@@ -1,5 +1,6 @@
 import { cache } from "react";
 import { dotCMSClient } from "./dotCMSClient";
+import type { DotCMSPageContent } from "@/types/page";
 import {
     blogQuery,
     fragmentNav,
@@ -8,7 +9,7 @@ import {
 
 export const getDotCMSPage = cache(async (path: string) => {
     try {
-        const pageData = await dotCMSClient.page.get(path, {
+        const pageData = await dotCMSClient.page.get<{ content: DotCMSPageContent }>(path, {
             graphql: {
                 page:`
                     containers {
