@@ -14,11 +14,10 @@ interface PageProps {
 }
 
 export function Page({ pageContent }: PageProps) {
-  // TODO: we're getting the blogs from the graphql query
   const { pageAsset } = useEditableDotCMSPage(pageContent);
 
   return (
-    <main className="container m-auto">
+    <main className="container m-auto py-12 md:py-16 lg:py-20">
       <DotCMSLayoutBody
         page={pageAsset}
         components={pageComponents}
