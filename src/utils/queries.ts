@@ -50,25 +50,6 @@ export const homeGraphQL = {
                             buttonText
                         }
                     }
-
-                    ... on BlogList {
-                        blogs {
-                            identifier
-                            title
-                            urlMap
-                            modDate
-                            urlTitle
-                            description
-                            author {
-                                firstName
-                                lastName
-                            }
-                            image {
-                                title
-                                idPath
-                            }
-                        }
-                    }
                 }
             }
         }
