@@ -41,7 +41,7 @@ function getPageMeta(page: DotCMSPage): { title?: string; description?: string }
     };
 }
 
-export function buildPageMetadata({
+function buildPageMetadata({
     title,
     description,
     path,
