@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import type { DotCMSNavigationItem } from "@dotcms/types";
 import { Button } from "@/components/ui/button";
-import { SearchTrigger } from "./SearchTrigger";
 import { MobileNav } from "./MobileNav";
 
 interface HeaderProps {
@@ -50,7 +49,6 @@ export default function Header({
           </nav>
         </div>
         <div className="flex items-center gap-4">
-          <SearchTrigger />
           <Link
             href="https://dev.dotcms.com/getting-started/setup/demo-instance"
             target="_blank"
