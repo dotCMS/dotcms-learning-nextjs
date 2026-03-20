@@ -1,10 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
+import DotCMSImage from "@/components/DotCMSImage";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { getImageSrc } from "@/utils/pageHelpers";
 
 interface BannerItem {
     title?: string;
@@ -91,29 +90,26 @@ export default function BannerCarousel(props: BannerCarouselProps) {
                 {/* Right Panel - Image */}
                 <div className="relative w-full h-[300px] md:h-[400px] lg:h-auto lg:min-h-[600px] px-6 md:px-0">
                     <div className="relative overflow-hidden bg-muted rounded-2xl w-full h-full">
-                        {banners.map(({ image, title }, index) => {
-                            const imageSrc = getImageSrc(image);
-                            return (
-                                <div
-                                    key={index}
-                                    className={`duration-700 ease-in-out absolute inset-0 w-full h-full ${
-                                        index === currentIndex
-                                            ? "opacity-100"
-                                            : "opacity-0 pointer-events-none"
-                                    }`}
-                                    data-carousel-item
-                                >
-                                    {imageSrc && (
-                                        <Image
-                                            src={imageSrc}
-                                            fill={true}
-                                            className="object-cover rounded-2xl"
-                                            alt={title || "Banner image"}
-                                        />
-                                    )}
-                                </div>
-                            );
-                        })}
+                        {banners.map(({ image, title }, index) => (
+                            <div
+                                key={index}
+                                className={`duration-700 ease-in-out absolute inset-0 w-full h-full ${
+                                    index === currentIndex
+                                        ? "opacity-100"
+                                        : "opacity-0 pointer-events-none"
+                                }`}
+                                data-carousel-item
+                            >
+                                {image && (
+                                    <DotCMSImage
+                                        src={image}
+                                        fill={true}
+                                        className="object-cover rounded-2xl"
+                                        alt={title || "Banner image"}
+                                    />
+                                )}
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

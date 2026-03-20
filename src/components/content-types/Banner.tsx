@@ -1,9 +1,8 @@
 import { DotCMSBasicContentlet } from "@dotcms/types";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import Image from "next/image";
 import { DotCMSEditableText } from "@dotcms/react";
-import { getImageSrc } from "@/utils/pageHelpers";
+import DotCMSImage from "@/components/DotCMSImage";
 
 type BannerProps = DotCMSBasicContentlet & {
     title?: string;
@@ -15,8 +14,6 @@ type BannerProps = DotCMSBasicContentlet & {
 
 export default function Banner(props: BannerProps) {
     const { title, caption, image, link, buttonText } = props;
-
-    const imageSrc = getImageSrc(image);
 
     return (
         <section className="w-full py-12 md:py-16 lg:py-20">
@@ -45,11 +42,11 @@ export default function Banner(props: BannerProps) {
             </div>
 
             {/* Image section */}
-            {imageSrc && (
+            {image && (
                 <div className="max-w-6xl mx-auto px-4 mt-12">
                     <div className="bg-gray-100 rounded-2xl p-2">
-                        <Image
-                            src={imageSrc}
+                        <DotCMSImage
+                            src={image}
                             width={1200}
                             height={500}
                             alt={title || "Banner"}
