@@ -3,16 +3,12 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { DotCMSEditableText } from "@dotcms/react";
-
-interface BannerImage {
-    idPath?: string;
-    identifier?: string;
-}
+import { getImageSrc } from "@/utils/pageHelpers";
 
 type BannerProps = DotCMSBasicContentlet & {
     title?: string;
     caption?: string;
-    image?: BannerImage | string;
+    image?: { idPath?: string; identifier?: string } | string;
     link?: string;
     buttonText?: string;
 };
@@ -20,10 +16,7 @@ type BannerProps = DotCMSBasicContentlet & {
 export default function Banner(props: BannerProps) {
     const { title, caption, image, link, buttonText } = props;
 
-    const imageSrc =
-        typeof image === "object"
-            ? image?.idPath || image?.identifier
-            : image;
+    const imageSrc = getImageSrc(image);
 
     return (
         <section className="w-full py-12 md:py-16 lg:py-20">

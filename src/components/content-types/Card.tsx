@@ -36,11 +36,7 @@ const Card = ({ title, description, image, inode, ctaText = "Learn more" }: Card
                 <span className="font-bold text-foreground text-lg group-hover:text-primary-dark transition-colors duration-200">
                     {title}
                 </span>
-                <div className="line-clamp-4">
-                    <div className="flex flex-col gap-2">
-                        <p className="text-muted-foreground">{description}</p>
-                    </div>
-                </div>
+                <p className="text-muted-foreground line-clamp-4">{description}</p>
             </div>
 
             {/* Call to action section */}

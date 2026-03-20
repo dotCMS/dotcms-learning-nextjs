@@ -4,6 +4,17 @@ import { toAbsoluteUrl } from "./structuredData";
 
 export type PageView = "detail" | "blog-listing" | "page";
 
+interface ImageWithPath {
+    idPath?: string;
+    identifier?: string;
+}
+
+export function getImageSrc(image: ImageWithPath | string | undefined): string | undefined {
+    if (!image) return undefined;
+    if (typeof image === "object") return image.idPath || image.identifier;
+    return image;
+}
+
 export function detectPageView(pageData: DotCMSComposedPageResponse<DotCMSPageResponse>): PageView {
     const url: string = pageData?.pageAsset?.page?.url ?? "";
 

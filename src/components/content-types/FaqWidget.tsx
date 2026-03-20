@@ -98,7 +98,7 @@ export default function FaqWidget(props: FaqWidgetProps) {
             <div className="w-full max-w-[600px] pt-0.5 pb-10 flex flex-col justify-start items-start gap-4 relative z-10">
                 {faq.map((faqItem, index) => (
                     <FAQItem
-                        key={index}
+                        key={faqItem.question}
                         {...faqItem}
                         isOpen={openItems.has(index)}
                         onToggle={() => toggleItem(index)}

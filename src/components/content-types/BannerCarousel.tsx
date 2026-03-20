@@ -4,11 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-
-interface BannerImage {
-    idPath?: string;
-    identifier?: string;
-}
+import { getImageSrc } from "@/utils/pageHelpers";
 
 interface BannerItem {
     title?: string;
@@ -16,7 +12,7 @@ interface BannerItem {
     tag?: string;
     link?: string;
     buttonText?: string;
-    image?: BannerImage | string;
+    image?: { idPath?: string; identifier?: string } | string;
 }
 
 interface BannerCarouselProps {
@@ -96,10 +92,7 @@ export default function BannerCarousel(props: BannerCarouselProps) {
                 <div className="relative w-full h-[300px] md:h-[400px] lg:h-auto lg:min-h-[600px] px-6 md:px-0">
                     <div className="relative overflow-hidden bg-muted rounded-2xl w-full h-full">
                         {banners.map(({ image, title }, index) => {
-                            const imageSrc =
-                                typeof image === "object"
-                                    ? image?.idPath || image?.identifier
-                                    : image;
+                            const imageSrc = getImageSrc(image);
                             return (
                                 <div
                                     key={index}

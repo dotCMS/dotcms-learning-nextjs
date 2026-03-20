@@ -20,11 +20,7 @@ interface HeaderProps {
 
 export default function Header({ logo, logoAlt = "Logo" }: HeaderProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
-  const [isMounted, setIsMounted] = useState(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
+  const [isMounted] = useState(() => typeof window !== 'undefined')
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {

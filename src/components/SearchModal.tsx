@@ -64,6 +64,12 @@ interface SearchModalProps {
     onClose: () => void;
 }
 
+const AI_SUGGESTIONS = [
+    "How do I get started?",
+    "What are the best practices?",
+    "Can you explain this concept?",
+];
+
 export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
@@ -215,24 +221,15 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <button
-                                        onClick={() => setSearchQuery("How do I get started?")}
-                                        className="block w-full text-left p-3 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors text-sm text-foreground"
-                                    >
-                                        How do I get started?
-                                    </button>
-                                    <button
-                                        onClick={() => setSearchQuery("What are the best practices?")}
-                                        className="block w-full text-left p-3 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors text-sm text-foreground"
-                                    >
-                                        What are the best practices?
-                                    </button>
-                                    <button
-                                        onClick={() => setSearchQuery("Can you explain this concept?")}
-                                        className="block w-full text-left p-3 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors text-sm text-foreground"
-                                    >
-                                        Can you explain this concept?
-                                    </button>
+                                    {AI_SUGGESTIONS.map((suggestion) => (
+                                        <button
+                                            key={suggestion}
+                                            onClick={() => setSearchQuery(suggestion)}
+                                            className="block w-full text-left p-3 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors text-sm text-foreground"
+                                        >
+                                            {suggestion}
+                                        </button>
+                                    ))}
                                 </div>
                             </div>
                         )}
@@ -281,9 +278,9 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                                         <p className="text-sm text-muted-foreground">
                                             Found {searchResults.length} result{searchResults.length !== 1 ? 's' : ''}
                                         </p>
-                                        {searchResults.map((result, index) => (
+                                        {searchResults.map((result) => (
                                             <Link
-                                                key={index}
+                                                key={result.url}
                                                 href={result.url}
                                                 onClick={handleClose}
                                                 className="group block p-3 border rounded-md hover:bg-gray-100 hover:!border-gray-400 cursor-pointer transition-colors"
@@ -349,9 +346,9 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                                             <div className="mt-4">
                                                 <h4 className="text-sm font-medium text-foreground mb-3">Sources</h4>
                                                 <div className="space-y-2">
-                                                    {aiSources.map((source, index) => (
+                                                    {aiSources.map((source) => (
                                                         <Link
-                                                            key={index}
+                                                            key={source.url}
                                                             href={source.url}
                                                             onClick={handleClose}
                                                             className="block p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
