@@ -2,7 +2,6 @@ import DotCMSImage from "@/components/DotCMSImage";
 import Link from "next/link";
 import type { Blog } from "@/types/blog";
 import type { BlogCardShow } from "@/components/content-types/BlogListContainer";
-import { BlogCardEditButton } from "@/components/BlogCardEditButton";
 
 const dateFormatOptions: Intl.DateTimeFormatOptions = {
   year: "numeric",
@@ -20,7 +19,6 @@ export default function BlogCard(blog: Blog & { show?: BlogCardShow }) {
 
   return (
     <div className="flex size-full flex-col gap-2 p-3 bg-[#fdfdfb] rounded-2xl border group transition-all duration-200 hover:shadow-lg cursor-pointer relative">
-      <BlogCardEditButton blog={blog} />
 
       {(show?.image ?? true) && (
         <Link
