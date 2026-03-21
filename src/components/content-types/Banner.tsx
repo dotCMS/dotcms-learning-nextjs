@@ -5,8 +5,8 @@ import { DotCMSEditableText } from "@dotcms/react";
 import DotCMSImage, { type DotCMSImageSrc } from "@/components/DotCMSImage";
 
 type BannerProps = DotCMSBasicContentlet & {
-  title?: string;
-  caption?: string;
+  title: string;
+  caption: string;
   image?: DotCMSImageSrc;
   link?: string;
   buttonText?: string;
