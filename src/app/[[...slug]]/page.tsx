@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 import { JsonLd } from "@/components/JsonLd";
 import { getDotCMSPage } from "@/utils/getDotCMSPage";
-import { homeGraphQL, pageGraphQL } from "@/utils/queries";
+import { navigationQuery } from "@/utils/queries";
 import {
   buildPageMetadata,
   buildWebPageStructuredData,
@@ -24,10 +24,9 @@ function resolvePath(slug?: string[]): string {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const path = resolvePath(slug);
-  const query = path === "/" ? homeGraphQL : pageGraphQL;
-
+    
   try {
-    const pageData = await getDotCMSPage(path, query);
+    const pageData = await getDotCMSPage(path);
     if (!pageData) return { title: "Not found" };
 
     const page = pageData.pageAsset?.page;
@@ -44,9 +43,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function CatchAllPage({ params }: PageProps) {
   const { slug } = await params;
   const path = resolvePath(slug);
-  const query = path === "/" ? homeGraphQL : pageGraphQL;
 
-  const pageContent = await getDotCMSPage(path, query);
+  const pageContent = await getDotCMSPage(path, {
+    content: { navigation: navigationQuery },
+  });
+
   if (!pageContent) return notFound();
 
   handleVanityRedirect(pageContent.pageAsset?.vanityUrl, redirect);

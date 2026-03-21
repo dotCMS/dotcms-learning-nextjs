@@ -1,4 +1,4 @@
-const navigationQuery = `
+export const navigationQuery = `
 DotNavigation(uri: "/", depth: 2) {
     href
     target
@@ -10,35 +10,6 @@ DotNavigation(uri: "/", depth: 2) {
     }
 }
 `;
-
-export const homeGraphQL = {
-  page: `
-        containers {
-            containerContentlets {
-                contentlets {
-                    _map
-                    ... on BannerCarousel {
-                        banners {
-                            title
-                            caption
-                            link
-                            image {
-                                title
-                                idPath
-                            }
-                            buttonText
-                        }
-                    }
-                }
-            }
-        }
-    `,
-  content: { navigation: navigationQuery },
-};
-
-export const pageGraphQL = {
-  content: { navigation: navigationQuery },
-};
 
 export const blogListGraphQL = {
   content: { navigation: navigationQuery },

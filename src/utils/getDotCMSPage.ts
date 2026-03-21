@@ -4,11 +4,11 @@ import type { DotCMSGraphQLParams } from "@dotcms/types";
 import type { DotCMSPageContent } from "@/types/page";
 
 export const getDotCMSPage = cache(
-  async (path: string, graphql: DotCMSGraphQLParams) => {
+  async (path: string, graphql?: DotCMSGraphQLParams) => {
     try {
       const pageData = await dotCMSClient.page.get<{
         content: DotCMSPageContent;
-      }>(path, { graphql });
+      }>(path, graphql ? { graphql } : undefined);
 
       return pageData;
     } catch (e) {
