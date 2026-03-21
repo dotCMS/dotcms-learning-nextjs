@@ -31,7 +31,7 @@ function WebPageContent(props: WebPageContentProps) {
 
   return (
     <div className="w-full">
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-6xl mx-auto">
         <div onClick={handleClick}>
           {body && (
             <DotCMSBlockEditorRenderer
