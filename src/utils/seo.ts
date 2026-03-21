@@ -25,7 +25,7 @@ function getBaseUrl(): string {
   return process.env.NEXT_PUBLIC_SITE_URL || "";
 }
 
-export function toAbsoluteUrl(path: string): string {
+function toAbsoluteUrl(path: string): string {
   const base = getBaseUrl().replace(/\/$/, "");
   const pathStr = path.startsWith("/") ? path : `/${path}`;
   return pathStr === "/" ? base : `${base}${pathStr}`;

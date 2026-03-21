@@ -1,6 +1,6 @@
 import BlogCard from "@/components/content-types/BlogCard";
 import type { Blog } from "@/types/blog";
-import type { BlogCardShow } from "@/components/content-types/BlogListContainer";
+import type { BlogCardShow } from "@/components/content-types/BlogList";
 
 interface BlogListProps {
   blogs?: Blog[];

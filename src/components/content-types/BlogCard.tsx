@@ -1,7 +1,7 @@
 import DotCMSImage from "@/components/DotCMSImage";
 import Link from "next/link";
 import type { Blog } from "@/types/blog";
-import type { BlogCardShow } from "@/components/content-types/BlogListContainer";
+import type { BlogCardShow } from "@/components/content-types/BlogList";
 
 const dateFormatOptions: Intl.DateTimeFormatOptions = {
   year: "numeric",

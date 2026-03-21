@@ -1,4 +1,4 @@
-export const navigationQuery = `
+const navigationQuery = `
 DotNavigation(uri: "/", depth: 2) {
     href
     target
