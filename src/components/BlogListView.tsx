@@ -7,7 +7,7 @@ interface BlogListProps {
   show?: BlogCardShow;
 }
 
-export default function BlogList({ blogs = [], show }: BlogListProps) {
+export default function BlogListView({ blogs = [], show }: BlogListProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {blogs.map((blog) => (

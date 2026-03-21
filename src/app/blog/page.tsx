@@ -11,7 +11,7 @@ import {
   handleVanityRedirect,
 } from "@/utils/seo";
 import { BlogListingPage } from "@/views/BlogListingPage";
-import BlogListContainer from "@/components/content-types/BlogListContainer";
+import BlogList from "@/components/content-types/BlogList";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -56,7 +56,7 @@ export default async function BlogPage() {
   });
 
   const slots = buildSlots(pageContent.pageAsset.containers, {
-    BlogList: BlogListContainer,
+    BlogList,
   });
 
   return (

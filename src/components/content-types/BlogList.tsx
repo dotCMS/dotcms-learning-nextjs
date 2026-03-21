@@ -1,5 +1,5 @@
 import { dotCMSClient } from "@/utils/dotCMSClient";
-import BlogList from "@/components/BlogList";
+import BlogListView from "@/components/BlogListView";
 import type { Blog } from "@/types/blog";
 
 export interface BlogCardShow {
@@ -8,7 +8,7 @@ export interface BlogCardShow {
   description: boolean;
 }
 
-export default async function BlogListContainer(props: {
+export default async function BlogList(props: {
   title?: string;
   quantity?: number;
   show?: string;
@@ -24,6 +24,6 @@ export default async function BlogListContainer(props: {
   };
 
   return (
-    <BlogList blogs={result.contentlets} show={show} />
+    <BlogListView blogs={result.contentlets} show={show} />
   );
 }
