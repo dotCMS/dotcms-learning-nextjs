@@ -9,7 +9,6 @@ import { DotCMSBasicContentlet } from "@dotcms/types";
 
 import type { BlockEditorNode } from "@dotcms/types";
 import { useIsEditMode } from "@/hooks/useIsEditMode";
-import { customRenderers } from "@/utils/blockEditorRenderers";
 import { defineStyleEditorSchema, styleEditorField } from "@dotcms/uve";
 import { cn } from "@/lib/utils";
 

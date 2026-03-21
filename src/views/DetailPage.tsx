@@ -3,7 +3,6 @@
 import DotCMSImage from "@/components/DotCMSImage";
 
 import { enableBlockEditorInline } from "@dotcms/uve";
-import { customRenderers } from "@/utils/blockEditorRenderers";
 import {
   DotCMSBlockEditorRenderer,
   useEditableDotCMSPage,
