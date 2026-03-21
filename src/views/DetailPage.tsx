@@ -124,10 +124,7 @@ export function DetailPage({ pageContent }: DetailPageProps) {
 
           <div onClick={handleClick} className={blockEditorClasses}>
             {body && (
-              <DotCMSBlockEditorRenderer
-                blocks={body}
-                customRenderers={customRenderers}
-              />
+              <DotCMSBlockEditorRenderer blocks={body} />
             )}
           </div>
         </div>

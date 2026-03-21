@@ -57,7 +57,7 @@ const mySchema = defineStyleEditorSchema({
             { label: "Center", value: "text-center" },
             { label: "Right", value: "text-right" },
           ],
-        })
+        }),
       ],
     },
   ],
@@ -70,10 +70,7 @@ function WebPageContent(props: WebPageContentProps) {
   const isEditMode = useIsEditMode();
   useStyleEditorSchemas([mySchema]);
 
-  const {
-    body,
-    dotStyleProperties,
-  } = props;
+  const { body, dotStyleProperties } = props;
 
   const { marginTop, marginBottom, alignment } = dotStyleProperties ?? {};
 
@@ -81,7 +78,7 @@ function WebPageContent(props: WebPageContentProps) {
     BASE_EDITOR_CLASSES,
     "prose-h1:mb-0",
     alignment,
-    isEditMode && "border-2 border-solid border-cyan-400 cursor-pointer"
+    isEditMode && "border-2 border-solid border-cyan-400 cursor-pointer",
   );
 
   const handleClick = () => {
@@ -99,7 +96,6 @@ function WebPageContent(props: WebPageContentProps) {
           <DotCMSBlockEditorRenderer
             blocks={body}
             className={blockEditorClasses}
-            customRenderers={customRenderers}
           />
         )}
       </div>
