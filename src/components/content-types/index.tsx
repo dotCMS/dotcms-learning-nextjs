@@ -12,7 +12,6 @@ import VtlInclude from "./VtlInclude";
 import Video from "./Video";
 import WebPageContent from "./WebPageContent";
 import BlogCard from "../BlogCard";
-import BlogListContainer from "./BlogListContainer";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const pageComponents: Record<string, ComponentType<any>> = {
@@ -28,5 +27,4 @@ export const pageComponents: Record<string, ComponentType<any>> = {
   VtlInclude,
   Video,
   webPageContent: WebPageContent,
-  BlogList: BlogListContainer,
 };

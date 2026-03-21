@@ -1,12 +1,8 @@
-"use client";
-
-import { useIsEditMode } from "@/hooks/useIsEditMode";
-import { editContentlet } from "@dotcms/uve";
 import DotCMSImage from "@/components/DotCMSImage";
 import Link from "next/link";
 import type { Blog } from "@/types/blog";
-import type { Contentlet } from "@dotcms/types";
 import type { BlogCardShow } from "@/components/content-types/BlogListContainer";
+import { BlogCardEditButton } from "@/components/BlogCardEditButton";
 
 const dateFormatOptions: Intl.DateTimeFormatOptions = {
   year: "numeric",
@@ -22,18 +18,9 @@ export default function BlogCard(blog: Blog & { show?: BlogCardShow }) {
       ? `${authorData.firstName} ${authorData.lastName}`
       : null;
 
-  const isEditMode = useIsEditMode();
-
   return (
     <div className="flex size-full flex-col gap-2 p-3 bg-[#fdfdfb] rounded-2xl border group transition-all duration-200 hover:shadow-lg cursor-pointer relative">
-      {isEditMode && (
-        <button
-          onClick={() => editContentlet(blog as Contentlet<Blog>)}
-          className="absolute top-2 right-2 z-10 bg-blue-500 text-white rounded-md py-2 px-4 shadow-md hover:bg-blue-600"
-        >
-          Edit
-        </button>
-      )}
+      <BlogCardEditButton blog={blog} />
 
       {(show?.image ?? true) && (
         <Link

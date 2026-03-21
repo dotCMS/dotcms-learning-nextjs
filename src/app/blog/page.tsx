@@ -1,6 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 
+import { buildSlots } from "@dotcms/react";
 import { JsonLd } from "@/components/JsonLd";
 import { getDotCMSPage } from "@/utils/getDotCMSPage";
 import { blogListGraphQL } from "@/utils/queries";
@@ -10,6 +11,7 @@ import {
   handleVanityRedirect,
 } from "@/utils/seo";
 import { BlogListingPage } from "@/views/BlogListingPage";
+import BlogListContainer from "@/components/content-types/BlogListContainer";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -53,11 +55,15 @@ export default async function BlogPage() {
     path: PATH,
   });
 
+  const slots = buildSlots(pageContent.pageAsset.containers, {
+    BlogList: BlogListContainer,
+  });
+
   return (
     <>
       <JsonLd data={jsonLd} />
       {layout?.header && <Header navItems={navItems} />}
-      <BlogListingPage pageContent={pageContent} />
+      <BlogListingPage pageContent={pageContent} slots={slots} />
       {layout?.footer && <Footer />}
     </>
   );
