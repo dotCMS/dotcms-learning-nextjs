@@ -1,13 +1,13 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/Button";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
+} from "@/components/Sheet";
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import type { DotCMSNavigationItem } from "@dotcms/types";

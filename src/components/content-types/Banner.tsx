@@ -1,5 +1,5 @@
 import { DotCMSBasicContentlet } from "@dotcms/types";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/Button";
 import Link from "next/link";
 import { DotCMSEditableText } from "@dotcms/react";
 import DotCMSImage, { type DotCMSImageSrc } from "@/components/DotCMSImage";

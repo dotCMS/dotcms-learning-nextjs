@@ -55,7 +55,7 @@ export default async function BlogPage() {
     path: PATH,
   });
 
-  const slots = buildSlots(pageContent.pageAsset.containers, {
+  const slots = await buildSlots(pageContent.pageAsset.containers, {
     BlogList,
   });
 

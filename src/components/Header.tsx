@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { DotCMSNavigationItem } from "@dotcms/types";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/Button";
 import { MobileNav } from "./MobileNav";
 
 interface HeaderProps {
