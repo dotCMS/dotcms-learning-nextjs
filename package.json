@@ -1,5 +1,5 @@
 {
-  "name": "dotcms-nextjs-demo",
+  "name": "dotcms-learning-nextjs",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,10 +10,10 @@
     "knip": "knip"
   },
   "dependencies": {
-    "@dotcms/client": "^1.2.5-next.7",
-    "@dotcms/react": "^1.2.5-next.7",
-    "@dotcms/types": "^1.2.5-next.7",
-    "@dotcms/uve": "^1.2.5-next.7",
+    "@dotcms/client": "latest",
+    "@dotcms/react": "latest",
+    "@dotcms/types": "latest",
+    "@dotcms/uve": "latest",
     "@tailwindcss/typography": "^0.5.19",
     "clsx": "^2.1.1",
     "lucide-react": "^0.577.0",
