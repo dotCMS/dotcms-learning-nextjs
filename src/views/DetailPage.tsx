@@ -43,49 +43,35 @@ export function DetailPage({ pageContent }: DetailPageProps) {
     }
   };
 
+  const author = urlContentMap?.author?.[0];
+  const authorName =
+    author?.firstName && author?.lastName
+      ? `${author.firstName} ${author.lastName}`
+      : null;
+
   return (
-    <main className="container m-auto">
-      <article className="w-full py-12 md:py-16 lg:py-20">
-        <div className="max-w-4xl mx-auto px-4">
+    <main className="detail-page">
+      <article>
+        <div>
           {urlContentMap?.title && (
-            <h1 className="text-foreground text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight mb-6">
-              {urlContentMap?.title}
-            </h1>
+            <h1>{urlContentMap.title}</h1>
           )}
 
-          <div className="flex items-center gap-4 mb-8 pb-6 border-gray-100">
-            {urlContentMap?.author?.[0]?.firstName && (
-              <div className="flex items-center gap-2">
-                {urlContentMap.author[0].image?.idPath ? (
-                  <DotCMSImage
-                    className="w-8 h-8 rounded-full object-cover"
-                    src={urlContentMap.author[0].image!}
-                    width={32}
-                    height={32}
-                    alt={`${urlContentMap.author[0].firstName} ${urlContentMap.author[0].lastName}`}
-                  />
-                ) : (
-                  <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                    <span className="text-primary-foreground text-sm font-semibold">
-                      {urlContentMap.author[0].firstName[0]}
-                      {urlContentMap.author[0].lastName?.[0]}
-                    </span>
-                  </div>
-                )}
-                <span className="text-foreground font-medium">
-                  {urlContentMap.author[0].firstName}{" "}
-                  {urlContentMap.author[0].lastName}
-                </span>
+          <div className="detail-page__meta">
+            {author?.image?.idPath && authorName && (
+              <div className="detail-page__author">
+                <DotCMSImage
+                  src={author.image}
+                  width={32}
+                  height={32}
+                  alt={authorName}
+                />
+                <span>{authorName}</span>
               </div>
             )}
             {urlContentMap?.publishDate && (
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
+              <div className="detail-page__date">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -93,14 +79,10 @@ export function DetailPage({ pageContent }: DetailPageProps) {
                     d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                   />
                 </svg>
-                <time className="text-sm">
+                <time>
                   {new Date(urlContentMap.publishDate).toLocaleDateString(
                     "en-US",
-                    {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    },
+                    { year: "numeric", month: "long", day: "numeric" },
                   )}
                 </time>
               </div>
@@ -108,23 +90,18 @@ export function DetailPage({ pageContent }: DetailPageProps) {
           </div>
 
           {urlContentMap?.image && (
-            <div className="mb-8 -mx-6 sm:-mx-8 md:-mx-12 lg:-mx-16">
-              <div className="bg-gray-100 rounded-2xl p-2">
-                <DotCMSImage
-                  className="w-full h-auto object-cover rounded-xl"
-                  src={urlContentMap.image}
-                  width={800}
-                  height={400}
-                  alt={urlContentMap?.title || "Blog post image"}
-                />
-              </div>
+            <div className="detail-page__image">
+              <DotCMSImage
+                src={urlContentMap.image}
+                width={800}
+                height={400}
+                alt={urlContentMap?.title || "Blog post image"}
+              />
             </div>
           )}
 
           <div onClick={handleClick} className={blockEditorClasses}>
-            {body && (
-              <DotCMSBlockEditorRenderer blocks={body} />
-            )}
+            {body && <DotCMSBlockEditorRenderer blocks={body} />}
           </div>
         </div>
       </article>

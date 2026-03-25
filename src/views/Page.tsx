@@ -17,7 +17,7 @@ export function Page({ pageContent }: PageProps) {
   const { pageAsset } = useEditableDotCMSPage(pageContent);
 
   return (
-    <main className="container m-auto py-12 md:py-16 lg:py-20">
+    <main className="page-main">
       <DotCMSLayoutBody
         page={pageAsset}
         components={pageComponents}
