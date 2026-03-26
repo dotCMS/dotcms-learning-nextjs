@@ -390,39 +390,31 @@
   }
 
   .detail-page article {
-    @apply w-full py-12 md:py-16 lg:py-20;
-  }
-
-  .detail-page article > div {
-    @apply max-w-4xl mx-auto px-4;
+    @apply w-full py-12 md:py-16 lg:py-20 max-w-4xl mx-auto px-4;
   }
 
   .detail-page h1 {
     @apply text-foreground text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight mb-6;
   }
 
-  .detail-page__meta {
-    @apply flex items-center gap-4 mb-8 pb-6;
-  }
-
-  .detail-page__author {
-    @apply flex items-center gap-2;
-  }
-
-  .detail-page__author img {
-    @apply w-8 h-8 rounded-full object-cover;
-  }
-
-  .detail-page__author span {
-    @apply text-foreground font-medium;
-  }
-
   .detail-page__date {
-    @apply flex items-center gap-2 text-muted-foreground text-sm;
+    @apply block text-muted-foreground text-sm mb-8;
   }
 
-  .detail-page__date svg {
-    @apply w-4 h-4;
+  .detail-page__body {
+    @apply prose prose-slate max-w-none;
+  }
+
+  .detail-page__body img {
+    @apply rounded-xl;
+  }
+
+  .detail-page__body a {
+    @apply text-primary hover:text-primary-dark;
+  }
+
+  .detail-page__body li p {
+    @apply my-0;
   }
 
   .detail-page__image {
