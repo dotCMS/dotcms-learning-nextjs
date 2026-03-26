@@ -1,6 +1,5 @@
 "use client";
 
-import { enableBlockEditorInline } from "@dotcms/uve";
 import {
   DotCMSBlockEditorRenderer,
   useStyleEditorSchemas,
@@ -8,7 +7,6 @@ import {
 import { DotCMSBasicContentlet } from "@dotcms/types";
 
 import type { BlockEditorNode } from "@dotcms/types";
-import { useIsEditMode } from "@/hooks/useIsEditMode";
 import { defineStyleEditorSchema, styleEditorField } from "@dotcms/uve";
 import { cn } from "@/lib/utils";
 
@@ -63,37 +61,22 @@ const mySchema = defineStyleEditorSchema({
 });
 
 function WebPageContent(props: WebPageContentProps) {
-  const isEditMode = useIsEditMode();
   useStyleEditorSchemas([mySchema]);
 
   const { body, dotStyleProperties } = props;
 
   const { marginTop, marginBottom, alignment } = dotStyleProperties ?? {};
 
-  const blockEditorClasses = cn(
+  const contentClasses = cn(
     "web-page-content",
+    marginTop,
+    marginBottom,
     alignment,
-    isEditMode && "web-page-content--edit",
   );
-
-  const handleClick = () => {
-    if (isEditMode) {
-      enableBlockEditorInline(props, "body");
-    }
-  };
-
-  const contentClasses = cn("w-full", marginTop, marginBottom);
 
   return (
     <div className={contentClasses}>
-      <div onClick={handleClick}>
-        {body && (
-          <DotCMSBlockEditorRenderer
-            blocks={body}
-            className={blockEditorClasses}
-          />
-        )}
-      </div>
+      {body && <DotCMSBlockEditorRenderer blocks={body} />}
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import { DotCMSBasicContentlet } from "@dotcms/types";
 import { Button } from "@/components/Button";
 import Link from "next/link";
-import { DotCMSEditableText } from "@dotcms/react";
 import DotCMSImage, { type DotCMSImageSrc } from "@/components/DotCMSImage";
 
 type BannerProps = DotCMSBasicContentlet & {
@@ -18,9 +17,7 @@ export default function Banner(props: BannerProps) {
   return (
     <section className="banner">
       <div className="banner__content">
-        <h1>
-          <DotCMSEditableText contentlet={props} fieldName="title" />
-        </h1>
+        <h1>{title}</h1>
         <p>{caption}</p>
         {link && buttonText && (
           <Link href={link} target="_blank" rel="noopener noreferrer">

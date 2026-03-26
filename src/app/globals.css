@@ -331,11 +331,27 @@
 
   /* ── Web Page Content ───────────────────── */
   .web-page-content {
-    @apply prose prose-slate max-w-none prose-img:rounded-xl prose-a:text-primary hover:prose-a:text-primary-dark [&_li_p]:my-0 prose-h1:text-slate-800 prose-h1:mb-0;
+    @apply prose prose-slate max-w-none;
   }
 
-  .web-page-content--edit {
-    @apply border-2 border-solid border-cyan-400 cursor-pointer;
+  .web-page-content img {
+    @apply rounded-xl;
+  }
+
+  .web-page-content a {
+    @apply text-primary;
+  }
+
+  .web-page-content a:hover {
+    @apply text-primary-dark;
+  }
+
+  .web-page-content h1 {
+    @apply text-slate-800 mb-0;
+  }
+
+  .web-page-content li p {
+    @apply my-0;
   }
 
   /* ── Image content type ──────────────────── */
