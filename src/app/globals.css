@@ -329,6 +329,31 @@
     @apply w-full bg-gray-200 h-12 flex justify-center items-center;
   }
 
+  /* ── Web Page Content ───────────────────── */
+  .web-page-content {
+    @apply prose prose-slate max-w-none;
+  }
+
+  .web-page-content img {
+    @apply rounded-xl;
+  }
+
+  .web-page-content a {
+    @apply text-primary;
+  }
+
+  .web-page-content a:hover {
+    @apply text-primary-dark;
+  }
+
+  .web-page-content h1 {
+    @apply text-slate-800 mb-0;
+  }
+
+  .web-page-content li p {
+    @apply my-0;
+  }
+
   /* ── Image content type ──────────────────── */
   .image-section {
     @apply w-full py-4 md:py-8 px-4 max-w-6xl mx-auto;
