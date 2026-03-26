@@ -329,6 +329,15 @@
     @apply w-full bg-gray-200 h-12 flex justify-center items-center;
   }
 
+  /* ── Web Page Content ───────────────────── */
+  .web-page-content {
+    @apply prose prose-slate max-w-none prose-img:rounded-xl prose-a:text-primary hover:prose-a:text-primary-dark [&_li_p]:my-0 prose-h1:text-slate-800 prose-h1:mb-0;
+  }
+
+  .web-page-content--edit {
+    @apply border-2 border-solid border-cyan-400 cursor-pointer;
+  }
+
   /* ── Image content type ──────────────────── */
   .image-section {
     @apply w-full py-4 md:py-8 px-4 max-w-6xl mx-auto;

@@ -62,9 +62,6 @@ const mySchema = defineStyleEditorSchema({
   ],
 });
 
-const BASE_EDITOR_CLASSES =
-  "prose prose-slate max-w-none prose-img:rounded-xl prose-a:text-primary hover:prose-a:text-primary-dark [&_li_p]:my-0 prose-h1:text-slate-800";
-
 function WebPageContent(props: WebPageContentProps) {
   const isEditMode = useIsEditMode();
   useStyleEditorSchemas([mySchema]);
@@ -74,10 +71,9 @@ function WebPageContent(props: WebPageContentProps) {
   const { marginTop, marginBottom, alignment } = dotStyleProperties ?? {};
 
   const blockEditorClasses = cn(
-    BASE_EDITOR_CLASSES,
-    "prose-h1:mb-0",
+    "web-page-content",
     alignment,
-    isEditMode && "border-2 border-solid border-cyan-400 cursor-pointer",
+    isEditMode && "web-page-content--edit",
   );
 
   const handleClick = () => {
