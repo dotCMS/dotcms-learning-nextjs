@@ -19,27 +19,26 @@ interface PageProps {
   params: Promise<{ slug: string[] }>;
 }
 
-function getBlogDetailMeta(urlContentMap: BlogURLContentMap | undefined) {
-  const title = urlContentMap?.title ? `${urlContentMap.title} - Blog` : "Blog";
-  const description = urlContentMap?.description;
-  const imageUrl = urlContentMap?.image?.idPath
-    ? getAbsoluteImageUrl(urlContentMap.image.idPath) ?? undefined
+function getBlogDetailMeta(blog: BlogURLContentMap | undefined) {
+  const title = blog?.title ? `${blog.title} - Blog` : "Blog";
+  const description = blog?.description;
+  const imageUrl = blog?.image?.idPath
+    ? getAbsoluteImageUrl(blog.image.idPath) ?? undefined
     : undefined;
-  const publishDate = urlContentMap?.publishDate
-    ? new Date(urlContentMap.publishDate).toISOString()
+  const publishDate = blog?.publishDate
+    ? new Date(blog.publishDate).toISOString()
     : undefined;
-  const modDateMs = Number(urlContentMap?.modDate);
+  const modDateMs = Number(blog?.modDate);
   const modDate =
-    urlContentMap?.modDate && !isNaN(modDateMs)
+    blog?.modDate && !isNaN(modDateMs)
       ? new Date(modDateMs).toISOString()
       : undefined;
-  const author = urlContentMap?.author?.[0];
+  const author = blog?.author?.[0];
   const authorName = author
     ? [author.firstName, author.lastName].filter(Boolean).join(" ")
     : undefined;
   return { title, description, imageUrl, publishDate, modDate, authorName };
 }
-
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const path = `/blog/${slug.join("/")}`;
